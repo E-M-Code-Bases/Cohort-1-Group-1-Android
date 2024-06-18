@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">StarStream</string>
+    <
+    <
+    <
+    <
+    <
+    <
+    < HEAD
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    =======
+
+    <string name="title_bottom_nav_bar_1">Home</string>
+    <string name="title_bottom_nav_bar_2">Search</string>
+    <string name="title_bottom_nav_bar_3">Favorites</string>
+
+    >>>>>>> e0bf9987b3d8d668ef5b6f4ec9cbfe0c9984b7ca
 </resources>

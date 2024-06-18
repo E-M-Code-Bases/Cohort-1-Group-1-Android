@@ -1,4 +1,4 @@
-package com.example.starstream.ui.fragments.movieList
+package com.example.starstream.presentation.ui.moviedetails
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,14 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.starstream.R
+import com.example.starstream.ui.fragments.movieDetails.MovieDetailsViewModel
 
-class MovieListFragment : Fragment() {
+class MovieDetailsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MovieListFragment()
+        fun newInstance() = MovieDetailsFragment()
     }
 
-    private val viewModel: MovieListViewModel by viewModels()
+    private val viewModel: MovieDetailsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,6 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+        return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 }
