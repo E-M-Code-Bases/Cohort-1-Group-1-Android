@@ -37,6 +37,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        dataBinding = true
+        buildConfig = true
+    }
 
 }
 
@@ -102,7 +106,6 @@ dependencies {
     //Custom Views
     implementation ("com.github.chrisbanes:PhotoView:2.3.0")
     implementation ("com.github.cachapa:ExpandableLayout:2.9.2")
-
 
     /* Koin - dependency injection */
     implementation ("io.insert-koin:koin-core:3.5.3")
