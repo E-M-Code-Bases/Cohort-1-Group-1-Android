@@ -2,7 +2,7 @@ package com.example.starstream.presentation.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.starstream.presentation.ui.home.HomeFragment
+
 
 class FragmentAdapter(private val fragment: Fragment) : FragmentStateAdapter(fragment.childFragmentManager, fragment.viewLifecycleOwner.lifecycle) {
     private val homeFragments = listOf(MovieListsFragment(), TvListsFragment())

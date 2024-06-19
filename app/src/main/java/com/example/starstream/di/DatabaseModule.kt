@@ -1,4 +1,4 @@
 package com.example.starstream.di
 
-class AppModule {
+class DatabaseModule {
 }
