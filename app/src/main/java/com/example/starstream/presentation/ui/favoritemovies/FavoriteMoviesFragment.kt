@@ -1,4 +1,4 @@
-package com.example.starstream.ui.fragments.favoritemovies
+package com.example.starstream.presentation.ui.favoritemovies
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.starstream.R
+import com.example.starstream.ui.fragments.favoritemovies.FavoriteMoviesViewModel
 
 class FavoriteMoviesFragment : Fragment() {
 
