@@ -1,32 +1,50 @@
 package com.example.starstream.presentation.ui.favoritemovies
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.example.starstream.R
-import com.example.starstream.ui.fragments.favoritemovies.FavoriteMoviesViewModel
+import com.example.starstream.presentation.adapter.FavoriteMovieAdapter
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoriteMoviesFragment : Fragment() {
+class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding>(R.layout.fragment_favorite_movies) {
 
-    companion object {
-        fun newInstance() = FavoriteMoviesFragment()
+    private val viewModel: FavoriteMoviesViewModel by viewModel()
+
+    override val defineBindingVariables: (FragmentFavoriteMoviesBinding) -> Unit
+        get() = { binding ->
+            binding.fragment = this
+            binding.lifecycleOwner = viewLifecycleOwner
+            binding.viewModel = viewModel
+        }
+
+    val adapterFavorites = FavoriteMovieAdapter { removeMovie(it) }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycle.addObserver(LifecycleRecyclerView(binding.recyclerView))
+        collectFlows(listOf(::collectFavoriteMovies))
     }
 
-    private val viewModel: FavoriteMoviesViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
+    override fun onResume() {
+        super.onResume()
+        viewModel.fetchFavoriteMovies()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_favorite_movies, container, false)
+    private fun removeMovie(movie: FavoriteMovie) {
+        viewModel.removeMovieFromFavorites(movie)
+        showSnackbar(
+            message = getString(R.string.snackbar_removed_item),
+            actionText = getString(R.string.snackbar_action_undo),
+            anchor = true
+        ) {
+            viewModel.addMovieToFavorites(movie)
+        }
+    }
+
+    private suspend fun collectFavoriteMovies() {
+        viewModel.favoriteMovies.collect { favoriteMovies ->
+            adapterFavorites.submitList(favoriteMovies)
+        }
     }
 }
