@@ -1,4 +1,4 @@
-package com.example.starstream.presentation.adapter
+package com.borabor.movieapp.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,11 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.borabor.movieapp.R
+import com.borabor.movieapp.databinding.ItemFullscreenImageBinding
+import com.borabor.movieapp.domain.model.Image
 
-
-class FullscreenImageAdapter(private val onClick: () -> Unit) : ListAdapter<Image, FullscreenImageAdapter.ViewHolder>(
-    DIFF_CALLBACK
-) {
+class FullscreenImageAdapter(private val onClick: () -> Unit) : ListAdapter<Image, FullscreenImageAdapter.ViewHolder>(DIFF_CALLBACK) {
     inner class ViewHolder(val view: ItemFullscreenImageBinding) : RecyclerView.ViewHolder(view.root) {
         init {
             view.photoView.setOnClickListener { onClick() }

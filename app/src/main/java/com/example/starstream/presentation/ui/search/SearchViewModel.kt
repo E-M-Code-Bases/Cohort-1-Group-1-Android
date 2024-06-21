@@ -1,6 +1,14 @@
 package com.example.starstream.presentation.ui.search
 
 import androidx.lifecycle.viewModelScope
+import com.example.starstream.domain.model.Movie
+import com.example.starstream.domain.model.MovieList
+import com.example.starstream.domain.useCase.GetSearchResults
+import com.example.starstream.presentation.ui.base.BaseViewModel
+import com.example.starstream.util.Constants
+import com.example.starstream.util.MediaType
+import com.example.starstream.util.Resource
+import com.example.starstream.util.UiState
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,7 +18,6 @@ import org.koin.core.component.inject
 
 class SearchViewModel : BaseViewModel(), KoinComponent {
 
-    // Inject GetSearchResults dependency
     private val getSearchResults: GetSearchResults by inject()
 
     private val _isSearchInitialized = MutableStateFlow(false)
@@ -25,29 +32,14 @@ class SearchViewModel : BaseViewModel(), KoinComponent {
     private val _movieTotalResults = MutableStateFlow(0)
     val movieTotalResults get() = _movieTotalResults.asStateFlow()
 
-    private val _tvResults = MutableStateFlow(emptyList<Tv>())
-    val tvResults get() = _tvResults.asStateFlow()
-
-    private val _tvTotalResults = MutableStateFlow(0)
-    val tvTotalResults get() = _tvTotalResults.asStateFlow()
-
-    private val _personResults = MutableStateFlow(emptyList<Person>())
-    val personResults get() = _personResults.asStateFlow()
-
-    private val _personTotalResults = MutableStateFlow(0)
-    val personTotalResults get() = _personTotalResults.asStateFlow()
-
     private var pageMovie = 1
-    private var pageTv = 1
-    private var pagePerson = 1
-
     private var isQueryChanged = false
 
     private suspend fun fetchSearchResults(mediaType: MediaType) {
         val page = when (mediaType) {
             MediaType.MOVIE -> pageMovie
-            MediaType.TV -> pageTv
-            MediaType.PERSON -> pagePerson
+
+            else -> throw IllegalArgumentException(Constants.ILLEGAL_ARGUMENT_MEDIA_TYPE)
         }
 
         getSearchResults(mediaType, query.value, page).collect { response ->
@@ -59,17 +51,9 @@ class SearchViewModel : BaseViewModel(), KoinComponent {
                             _movieResults.value = if (isQueryChanged) movieList.results else _movieResults.value + movieList.results
                             _movieTotalResults.value = movieList.totalResults
                         }
-                        MediaType.TV -> {
-                            val tvList = response.data as TvList
-                            _tvResults.value = if (isQueryChanged) tvList.results else _tvResults.value + tvList.results
-                            _tvTotalResults.value = tvList.totalResults
-                        }
-                        MediaType.PERSON -> {
-                            val personList = response.data as PersonList
-                            _personResults.value = if (isQueryChanged) personList.results else _personResults.value + personList.results
-                            _personTotalResults.value = personList.totalResults
-                        }
+                        else -> throw IllegalArgumentException(Constants.ILLEGAL_ARGUMENT_MEDIA_TYPE)
                     }
+
                     areResponsesSuccessful.add(true)
                     isInitial = false
                 }
@@ -87,8 +71,8 @@ class SearchViewModel : BaseViewModel(), KoinComponent {
 
         when (type as MediaType) {
             MediaType.MOVIE -> pageMovie++
-            MediaType.TV -> pageTv++
-            MediaType.PERSON -> pagePerson++
+
+            else -> throw IllegalArgumentException(Constants.ILLEGAL_ARGUMENT_MEDIA_TYPE)
         }
 
         viewModelScope.launch {
@@ -106,8 +90,6 @@ class SearchViewModel : BaseViewModel(), KoinComponent {
         isInitial = true
 
         pageMovie = 1
-        pageTv = 1
-        pagePerson = 1
 
         initRequests()
     }
@@ -117,8 +99,6 @@ class SearchViewModel : BaseViewModel(), KoinComponent {
         _query.value = ""
 
         _movieResults.value = emptyList()
-        _tvResults.value = emptyList()
-        _personResults.value = emptyList()
     }
 
     fun initRequests() {
@@ -126,8 +106,6 @@ class SearchViewModel : BaseViewModel(), KoinComponent {
             coroutineScope {
                 launch {
                     fetchSearchResults(MediaType.MOVIE)
-                    fetchSearchResults(MediaType.TV)
-                    fetchSearchResults(MediaType.PERSON)
                 }
             }
             setUiState()

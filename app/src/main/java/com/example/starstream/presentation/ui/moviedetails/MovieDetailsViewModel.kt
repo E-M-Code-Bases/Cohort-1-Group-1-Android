@@ -1,5 +1,16 @@
 package com.example.starstream.presentation.ui.moviedetails
 
+import androidx.lifecycle.viewModelScope
+import com.example.starstream.domain.model.FavoriteMovie
+import com.example.starstream.domain.model.MovieDetail
+import com.example.starstream.domain.useCase.AddFavorite
+import com.example.starstream.domain.useCase.CheckFavorites
+import com.example.starstream.domain.useCase.DeleteFavorite
+import com.example.starstream.domain.useCase.GetDetails
+import com.example.starstream.presentation.ui.base.BaseViewModel
+import com.example.starstream.util.MediaType
+import com.example.starstream.util.Resource
+import com.example.starstream.util.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -19,7 +30,7 @@ class MovieDetailsViewModel (
 
     private lateinit var favoriteMovie: FavoriteMovie
 
-    private fun fetchMovieDetails() {
+    fun fetchMovieDetails() {
         viewModelScope.launch {
             getDetails(MediaType.MOVIE, id).collect { response ->
                 when (response) {

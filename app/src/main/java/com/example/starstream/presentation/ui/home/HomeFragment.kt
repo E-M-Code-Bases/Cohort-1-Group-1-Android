@@ -5,6 +5,8 @@ import android.view.View
 import com.example.starstream.R
 import com.example.starstream.databinding.FragmentHomeBinding
 import com.example.starstream.presentation.adapter.FragmentAdapter
+import com.example.starstream.presentation.ui.base.BaseFragment
+import com.example.starstream.util.LifecycleViewPager
 import com.google.android.material.tabs.TabLayoutMediator
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
@@ -19,7 +21,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         viewLifecycleOwner.lifecycle.addObserver(LifecycleViewPager(binding.viewPager))
 
         mediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            val tabTitles = listOf(getString(R.string.tab_title_1), getString(R.string.tab_title_2))
+            val tabTitles = listOf(getString(R.string.tab_title_1))
             tab.text = tabTitles[position]
         }
 

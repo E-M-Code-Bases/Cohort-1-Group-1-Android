@@ -1,32 +1,40 @@
 package com.example.starstream.presentation.ui.fullscreenimage
 
 import android.os.Bundle
-import android.os.Parcelable
+import android.view.View
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.example.starstream.R
+import com.example.starstream.databinding.FragmentFullscreenImageBinding
+import com.example.starstream.domain.model.Image
+import com.example.starstream.presentation.adapter.FullscreenImageAdapter
+import com.example.starstream.presentation.ui.base.BaseFragment
+import com.example.starstream.util.Constants
 import kotlinx.coroutines.flow.MutableStateFlow
 
-class FullscreenImageActivity : BaseActivity<ActivityFullscreenImageBinding>(R.layout.activity_fullscreen_image) {
+class FullscreenImageFragment : BaseFragment<FragmentFullscreenImageBinding>(R.layout.fragment_fullscreen_image) {
 
-    override val defineBindingVariables: (ActivityFullscreenImageBinding) -> Unit
-        get() = { binding ->
-            binding.activity = this
-            binding.lifecycleOwner = this
-        }
+    private var _binding: FragmentFullscreenImageBinding? = null
+    override val binding get() = _binding!!
 
+    // Observable state variables
     val isFullscreen = MutableStateFlow(false)
     val imageNumber = MutableStateFlow("")
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override val defineBindingVariables: ((FragmentFullscreenImageBinding) -> Unit)?
+        get() = { binding ->
+            binding.lifecycleOwner = viewLifecycleOwner
+            _binding = binding
+            binding.activity = this // Set the fragment instance to the 'activity' variable in the layout
+        }
 
-        initBinding()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val imageList = intent.getParcelableArrayListExtra<Parcelable>(Constants.IMAGE_LIST) as List<Image>
-        val position = intent.getIntExtra(Constants.ITEM_POSITION, 0)
+        val imageList = arguments?.getParcelableArrayList<Image>(Constants.IMAGE_LIST) ?: emptyList()
+        val position = arguments?.getInt(Constants.ITEM_POSITION, 0) ?: 0
         val totalImageCount = imageList.size
 
         binding.vpImages.apply {
@@ -45,19 +53,29 @@ class FullscreenImageActivity : BaseActivity<ActivityFullscreenImageBinding>(R.l
     }
 
     private fun hideUi() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        WindowInsetsControllerCompat(window, binding.frameLayout).let {
-            it.hide(WindowInsetsCompat.Type.systemBars())
-            it.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        activity?.let {
+            WindowCompat.setDecorFitsSystemWindows(it.window, false)
+            WindowInsetsControllerCompat(it.window, binding.frameLayout).let { controller ->
+                controller.hide(WindowInsetsCompat.Type.systemBars())
+                controller.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+            }
+            isFullscreen.value = true
         }
-
-        isFullscreen.value = true
     }
 
     private fun showUi() {
-        WindowCompat.setDecorFitsSystemWindows(window, true)
-        WindowInsetsControllerCompat(window, binding.frameLayout).show(WindowInsetsCompat.Type.systemBars())
+        activity?.let {
+            WindowCompat.setDecorFitsSystemWindows(it.window, true)
+            WindowInsetsControllerCompat(it.window, binding.frameLayout).show(WindowInsetsCompat.Type.systemBars())
+            isFullscreen.value = false
+        }
+    }
+    fun finish() {
+        activity?.supportFragmentManager?.popBackStack()
+    }
 
-        isFullscreen.value = false
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

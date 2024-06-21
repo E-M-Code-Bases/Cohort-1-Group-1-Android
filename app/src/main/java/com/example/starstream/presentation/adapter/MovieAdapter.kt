@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-
+import com.example.starstream.databinding.ItemMovieBinding
+import com.example.starstream.databinding.ItemNowplayingMovieBinding
+import com.example.starstream.domain.model.Movie
 
 class MovieAdapter(
     private val isGrid: Boolean = false,
@@ -17,8 +19,8 @@ class MovieAdapter(
         constructor(parent: ViewGroup) : this(ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    inner class TrendingViewHolder private constructor(val view: ItemTrendingMovieBinding) : RecyclerView.ViewHolder(view.root) {
-        constructor(parent: ViewGroup) : this(ItemTrendingMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)) {
+    inner class TrendingViewHolder private constructor(val view: ItemNowplayingMovieBinding) : RecyclerView.ViewHolder(view.root) {
+        constructor(parent: ViewGroup) : this(ItemNowplayingMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)) {
             view.fabTrailer.setOnClickListener {
                 onTrendingFabClick?.invoke(getItem(adapterPosition).id)
             }

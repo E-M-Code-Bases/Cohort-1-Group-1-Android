@@ -1,7 +1,15 @@
 package com.example.starstream.presentation.ui.movielists
 
 import androidx.lifecycle.viewModelScope
-
+import com.example.starstream.domain.model.Movie
+import com.example.starstream.domain.model.MovieList
+import com.example.starstream.domain.useCase.GetList
+import com.example.starstream.domain.useCase.GetTrendingVideos
+import com.example.starstream.presentation.ui.base.BaseViewModel
+import com.example.starstream.util.Constants
+import com.example.starstream.util.MediaType
+import com.example.starstream.util.Resource
+import com.example.starstream.util.UiState
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -134,7 +142,7 @@ class MovieListsViewModel(
                     fetchList()
                     fetchList(Constants.LIST_ID_POPULAR)
                     fetchList(Constants.LIST_ID_TOP_RATED)
-                    //fetchList(Constants.LIST_ID_NOW_PLAYING)
+                    fetchList(Constants.LIST_ID_NOW_PLAYING)
                     fetchList(Constants.LIST_ID_UPCOMING)
                 }
             }

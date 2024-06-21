@@ -1,32 +1,99 @@
 package com.example.starstream.presentation.ui.movielists
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.example.starstream.R
-import com.example.starstream.ui.fragments.movieList.MovieListViewModel
+import com.example.starstream.databinding.FragmentMovieListsBinding
+import com.example.starstream.presentation.adapter.MovieAdapter
+import com.example.starstream.presentation.ui.base.BaseFragment
+import com.example.starstream.util.LifecycleRecyclerView
+import com.example.starstream.util.LifecycleViewPager
+import com.example.starstream.util.playYouTubeVideo
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieListsFragment : Fragment() {
+class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.fragment_movie_lists) {
 
-    companion object {
-        fun newInstance() = MovieListsFragment()
+    private val viewModel: MovieListsViewModel by viewModel()
+
+    override val defineBindingVariables: (FragmentMovieListsBinding) -> Unit
+        get() = { binding ->
+            binding.fragment = this
+            binding.lifecycleOwner = viewLifecycleOwner
+            binding.viewModel = viewModel
+        }
+
+    val adapterTrending = MovieAdapter(isTrending = true) { playTrailer(it) }
+    val adapterPopular = MovieAdapter()
+    val adapterTopRated = MovieAdapter()
+    val adapterNowPlaying = MovieAdapter()
+    val adapterUpcoming = MovieAdapter()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycle.apply {
+            addObserver(LifecycleViewPager(binding.vpTrendings, true))
+            addObserver(LifecycleRecyclerView(binding.rvPopular))
+            addObserver(LifecycleRecyclerView(binding.rvTopRated))
+            addObserver(LifecycleRecyclerView(binding.rvNowPlaying))
+            addObserver(LifecycleRecyclerView(binding.rvUpcoming))
+        }
+
+//        setupSpinner()
+        collectFlows(listOf(::collectTrendingMovies, ::collectPopularMovies, ::collectTopRatedMovies, ::collectNowPlayingMovies, ::collectUpcomingMovies, ::collectUiState))
     }
 
-    private val viewModel: MovieListViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
+    private fun playTrailer(movieId: Int) {
+        val videoKey = viewModel.getTrendingMovieTrailer(movieId)
+        if (videoKey.isEmpty()) showSnackbar(
+            message = getString(R.string.trending_trailer_error),
+            indefinite = false,
+            anchor = true
+        ) else activity?.playYouTubeVideo(videoKey)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.fragment_movie_lists, container, false)
+
+    private suspend fun collectTrendingMovies() {
+        viewModel.trendingMovies.collect { trendingMovies ->
+            adapterTrending.submitList(trendingMovies.take(10))
+        }
+    }
+
+    private suspend fun collectPopularMovies() {
+        viewModel.popularMovies.collect { popularMovies ->
+            adapterPopular.submitList(popularMovies)
+        }
+    }
+
+    private suspend fun collectTopRatedMovies() {
+        viewModel.topRatedMovies.collect { topRatedMovies ->
+            adapterTopRated.submitList(topRatedMovies)
+        }
+    }
+
+    private suspend fun collectNowPlayingMovies() {
+        viewModel.nowPlayingMovies.collect { nowPlayingMovies ->
+            adapterNowPlaying.submitList(nowPlayingMovies)
+        }
+    }
+
+    private suspend fun collectUpcomingMovies() {
+        viewModel.upcomingMovies.collect { upcomingMovies ->
+            adapterUpcoming.submitList(upcomingMovies)
+        }
+    }
+
+    private suspend fun collectUiState() {
+        viewModel.uiState.collect { state ->
+            if (state.isError) showSnackbar(
+                message = state.errorText!!,
+                actionText = getString(R.string.button_retry),
+                anchor = true
+            ) {
+                viewModel.retryConnection {
+                    viewModel.initRequests()
+                }
+            }
+        }
     }
 }
