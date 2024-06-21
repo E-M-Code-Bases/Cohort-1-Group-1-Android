@@ -1,4 +1,4 @@
-package com.example.starstream.utils
+package com.example.starstream.util
 object Constants {
     const val LIST_ID_POPULAR = "popular"
     const val LIST_ID_TOP_RATED = "top_rated"
