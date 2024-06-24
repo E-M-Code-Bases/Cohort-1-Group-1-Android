@@ -7,13 +7,13 @@ import com.example.starstream.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class GetDetails(
+class GetSearchResults(
     private val movieRepository: MovieRepository,
 ) {
-    operator fun invoke(mediaType: MediaType, id: Int): Flow<Resource<Any>> = flow {
+    operator fun invoke(mediaType: MediaType, query: String, page: Int): Flow<Resource<Any>> = flow {
         emit(
             when (mediaType) {
-                MediaType.MOVIE -> movieRepository.getMovieDetails(id)
+                MediaType.MOVIE -> movieRepository.getMovieSearchResults(query, page)
                 else -> throw IllegalArgumentException(Constants.ILLEGAL_ARGUMENT_MEDIA_TYPE)
             }
         )

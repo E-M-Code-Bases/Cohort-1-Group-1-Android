@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <import type="com.example.starstream.util.ExtensionsKt" />
 
         <import type="com.example.starstream.util.ImageQuality" />
@@ -198,42 +200,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvVideos"
                         style="@style/RecyclerView"
-                        isVisible="@{!viewModel.details.videos.filterVideos(false).empty}"
+                        android:visibility="@{!viewModel.details.videos.filterVideos(false).isEmpty() ? View.VISIBLE : View.GONE}"
                         android:adapter="@{activity.adapterVideos}" />
-
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        style="@style/TitleParent"
-                        isVisible="@{!viewModel.details.images.backdrops.empty}">
-
-                        <TextView
-                            android:id="@+id/image"
-                            style="@style/Title"
-                            android:text="@string/detail_title_images" />
-
-                        <TextView
-                            style="@style/ListItemCount"
-                            android:text="@{@string/item_count(viewModel.details.images.backdrops.size())}"
-                            app:layout_constraintStart_toEndOf="@id/image" />
-
-                        <TextView
-                            style="@style/SeeAll"
-                            backgroundColor="@{activity.backgroundColor}"
-                            intentType="@{IntentType.IMAGES}"
-                            isLandscape="@{true}"
-                            isVisible="@{viewModel.details.images.backdrops.size() > 1}"
-                            list="@{viewModel.details.images.backdrops}"
-                            mediaType="@{MediaType.MOVIE}"
-                            title="@{@string/detail_title_images + @string/item_count(viewModel.details.images.backdrops.size())}" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvImages"
-                        style="@style/RecyclerView"
-                        fixedSize="@{true}"
-                        isVisible="@{!viewModel.details.images.backdrops.empty}"
-                        android:adapter="@{activity.adapterImages}" />
 
 
                 </LinearLayout>
