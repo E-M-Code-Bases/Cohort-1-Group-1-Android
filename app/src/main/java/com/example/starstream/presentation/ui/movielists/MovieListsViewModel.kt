@@ -121,7 +121,6 @@ class MovieListsViewModel(
         }
     }
 
-<<<<<<< HEAD
 //    fun getNowPlayingMoviesInSelectedRegion(countryName: String, countryCode: String) {
 //        _uiState.value = UiState.loadingState(isInitial)
 //        _nowPlayingMovies.value = emptyList()
@@ -135,21 +134,6 @@ class MovieListsViewModel(
 //            setUiState()
 //        }
 //    }
-=======
-    fun getNowPlayingMoviesInSelectedRegion(countryName: String, countryCode: String) {
-        _uiState.value = UiState.loadingState(isInitial)
-        _nowPlayingMovies.value = emptyList()
-        _countryName.value = countryName
-        _countryCode.value = countryCode
-
-        pageNowPlaying = 1
-
-        viewModelScope.launch {
-            coroutineScope { fetchList(Constants.LIST_ID_NOW_PLAYING) }
-            setUiState()
-        }
-    }
->>>>>>> 6c80a414ba0a035a66670691e5ffd892b92364bc
 
     fun initRequests() {
         viewModelScope.launch {

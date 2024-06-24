@@ -26,11 +26,6 @@ import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import com.example.starstream.R
-import com.example.starstream.domain.model.Genre
-import com.example.starstream.presentation.ui.moviedetails.MovieDetailsFragment
-import com.example.starstream.presentation.ui.seeall.SeeAllFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -39,9 +34,11 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import com.example.starstream.R
+import com.example.starstream.domain.model.Genre
 import com.example.starstream.domain.model.Movie
 import com.example.starstream.presentation.ui.home.HomeFragmentDirections
-import com.example.starstream.presentation.ui.seeall.SeeAllFragmentDirections
+import com.example.starstream.presentation.ui.seeall.SeeAllFragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
