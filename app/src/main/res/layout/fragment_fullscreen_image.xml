@@ -7,7 +7,8 @@
 
         <variable
             name="activity"
-            type="com.borabor.movieapp.presentation.ui.fullscreenimage.FullscreenImageActivity" />
+
+            type="com.example.starstream.presentation.ui.fullscreenimage.FullscreenImageFragment" />
 
     </data>
 

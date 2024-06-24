@@ -98,18 +98,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="SpinnerParent" parent="CardView">
-        <item name="cardCornerRadius">@dimen/card_corner_radius</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">0dp</item>
-        <item name="android:layout_marginStart">@dimen/start_margin</item>
-        <item name="android:layout_marginTop">1dp</item>
-        <item name="android:layout_marginEnd">@dimen/end_margin</item>
-        <item name="android:layout_marginBottom">1dp</item>
-        <item name="layout_constraintBottom_toBottomOf">parent</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
-    </style>
-
     <style name="BriefDetailParent">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -119,34 +107,6 @@
         <item name="android:paddingTop">@dimen/top_margin_small</item>
         <item name="android:paddingEnd">@dimen/end_margin</item>
         <item name="android:paddingBottom">@dimen/bottom_margin_small</item>
-    </style>
-
-    <style name="ExpandableLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="el_duration">600</item>
-        <item name="layout_constraintBottom_toBottomOf">parent</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
-    </style>
-
-    <style name="ExpandableLayoutTitle">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/start_margin</item>
-        <item name="android:textSize">@dimen/title_text_size</item>
-        <item name="android:textStyle">bold</item>
-        <item name="layout_constraintStart_toStartOf">parent</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
-    </style>
-
-    <style name="ExpandIcon">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginEnd">@dimen/end_margin</item>
-        <item name="android:src">@drawable/ic_baseline_keyboard_arrow_down_24</item>
-        <item name="layout_constraintEnd_toEndOf">parent</item>
-        <item name="layout_constraintTop_toTopOf">parent</item>
     </style>
 
     <style name="DetailsTitle">
@@ -164,23 +124,6 @@
         <item name="android:layout_marginEnd">@dimen/end_margin</item>
         <item name="android:layout_marginBottom">@dimen/bottom_margin</item>
         <item name="fontFamily">sans-serif-light</item>
-    </style>
-
-    <style name="Externals">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:layout_marginEnd">12dp</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
-    </style>
-
-    <style name="ExternalsParent">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">@dimen/start_margin</item>
-        <item name="android:layout_marginTop">@dimen/top_margin_small</item>
-        <item name="android:layout_marginEnd">@dimen/end_margin</item>
-        <item name="android:layout_marginBottom">@dimen/bottom_margin_large</item>
     </style>
 
     <style name="DetailLightTheme" parent="Theme.Material3.Light.NoActionBar">

@@ -2,18 +2,12 @@ package com.example.starstream.presentation.ui.moviedetails
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.starstream.R
 import com.example.starstream.databinding.FragmentMovieDetailsBinding
-import com.example.starstream.presentation.adapter.ImageAdapter
-import com.example.starstream.presentation.adapter.MovieAdapter
-import com.example.starstream.presentation.adapter.PersonAdapter
 import com.example.starstream.presentation.adapter.VideoAdapter
 import com.example.starstream.presentation.ui.base.BaseFragment
 import com.example.starstream.util.playYouTubeVideo
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(R.layout.fragment_movie_details) {
@@ -27,32 +21,21 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(R.layout.
             binding.viewModel = viewModel
         }
 
-     val adapterVideos = VideoAdapter { playYouTubeVideo(it) }
-    private val adapterCast = PersonAdapter(isCast = true)
-     val adapterImages = ImageAdapter()
-    private val adapterRecommendations = MovieAdapter()
+    val adapterVideos = VideoAdapter { requireActivity().playYouTubeVideo(it) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.initRequests(id)
-        collectFlows(listOf(::collectDetails, ::collectUiState))
+        collectFlows(listOf(::collectUiState))
     }
 
-    fun onBackPressed () {
+    fun onBackPressed() {
         fun handleOnBackPressed() {
             findNavController().navigateUp()
-
         }
     }
 
-    private suspend fun collectDetails() {
-        viewModel.details.collect { details ->
-            adapterVideos.submitList(details.videos.filterVideos())
-            adapterImages.submitList(details.images.backdrops)
-            adapterRecommendations.submitList(details.recommendations.results)
-        }
-    }
 
     private suspend fun collectUiState() {
         viewModel.uiState.collect { state ->
@@ -65,5 +48,4 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(R.layout.
             }
         }
     }
-
 }
