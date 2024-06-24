@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -9,7 +9,7 @@
 
         <variable
             name="activity"
-            type="com.example.starstream.presentation.ui.seeall.SeeAllActivity" />
+            type="com.example.starstream.presentation.ui.seeall.SeeAllFragment" />
 
         <variable
             name="viewModel"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@{activity.backgroundColor}"
-        tools:context=".presentation.ui.seeall.SeeAllActivity">
+        tools:context=".presentation.ui.seeall.SeeAllFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
@@ -31,7 +31,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                activity="@{activity}"
+
                 backArrowTint="@{activity.backgroundColor}"
                 seeAllTitle="@{activity.title}"
                 titleTextColor="@{activity.backgroundColor}"

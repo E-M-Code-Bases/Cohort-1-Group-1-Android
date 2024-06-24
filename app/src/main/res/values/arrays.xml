@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="airing_tvs_time_periods">
-        <item>@string/title_airing_day</item>
-        <item>@string/title_airing_week</item>
     </string-array>
 
     <string-array name="media_type">
         <item>@string/title_movies</item>
-        <item>@string/title_tv_shows</item>
     </string-array>
 
     <string-array name="movie_genre_names">
@@ -54,47 +51,7 @@
         <item>37</item>
     </integer-array>
 
-    <string-array name="tv_genre_names">
-        <item>@string/genre_action_adventure</item>
-        <item>@string/genre_animation</item>
-        <item>@string/genre_comedy</item>
-        <item>@string/genre_crime</item>
-        <item>@string/genre_documentary</item>
-        <item>@string/genre_drama</item>
-        <item>@string/genre_family</item>
-        <item>@string/genre_kids</item>
-        <item>@string/genre_mystery</item>
-        <item>@string/genre_news</item>
-        <item>@string/genre_reality</item>
-        <item>@string/genre_scifi_fantasy</item>
-        <item>@string/genre_soap</item>
-        <item>@string/genre_talk</item>
-        <item>@string/genre_war_politics</item>
-        <item>@string/genre_western</item>
-    </string-array>
-
-    <integer-array name="tv_genre_ids">
-        <item>10759</item>
-        <item>16</item>
-        <item>35</item>
-        <item>80</item>
-        <item>99</item>
-        <item>18</item>
-        <item>10751</item>
-        <item>10762</item>
-        <item>9648</item>
-        <item>10763</item>
-        <item>10764</item>
-        <item>10765</item>
-        <item>10766</item>
-        <item>10767</item>
-        <item>10768</item>
-        <item>37</item>
-    </integer-array>
-
     <string-array name="credits_type">
-        <item>@string/title_as_cast</item>
-        <item>@string/title_as_crew</item>
     </string-array>
 
 </resources>

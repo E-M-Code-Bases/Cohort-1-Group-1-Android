@@ -4,8 +4,7 @@ package com.example.starstream.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class MovieDetailDTO(
-    @SerializedName("budget")
-    val budget: Long,
+
     @SerializedName("genres")
     val genres: List<GenreDTO>,
     @SerializedName("homepage")
@@ -14,24 +13,16 @@ data class MovieDetailDTO(
     val id: Int,
     @SerializedName("images")
     val images: ImageListDTO,
-    @SerializedName("original_language")
-    val originalLanguage: String,
     @SerializedName("original_title")
     val originalTitle: String,
     @SerializedName("overview")
     val overview: String?,
     @SerializedName("poster_path")
     val posterPath: String?,
-    @SerializedName("recommendations")
-    val recommendations: MovieListDTO,
     @SerializedName("release_date")
     val releaseDate: String?,
-    @SerializedName("revenue")
-    val revenue: Long,
     @SerializedName("runtime")
     val runtime: Int?,
-    @SerializedName("spoken_languages")
-    val spokenLanguages: List<LanguageDTO>,
     @SerializedName("status")
     val status: String,
     @SerializedName("title")
