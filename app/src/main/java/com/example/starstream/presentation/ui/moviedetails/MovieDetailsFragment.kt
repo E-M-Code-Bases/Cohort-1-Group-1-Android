@@ -2,18 +2,13 @@ package com.example.starstream.presentation.ui.moviedetails
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.starstream.R
 import com.example.starstream.databinding.FragmentMovieDetailsBinding
-import com.example.starstream.presentation.adapter.ImageAdapter
-import com.example.starstream.presentation.adapter.MovieAdapter
 import com.example.starstream.presentation.adapter.PersonAdapter
 import com.example.starstream.presentation.adapter.VideoAdapter
 import com.example.starstream.presentation.ui.base.BaseFragment
 import com.example.starstream.util.playYouTubeVideo
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(R.layout.fragment_movie_details) {
