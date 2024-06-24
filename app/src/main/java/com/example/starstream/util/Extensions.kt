@@ -80,3 +80,4 @@ internal fun String?.formatDate(): String {
     val inputFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     return if (!this.isNullOrEmpty()) outputFormat.format(inputFormat.parse(this)) else ""
 }
+
