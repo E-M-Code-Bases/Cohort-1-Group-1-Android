@@ -1,4 +1,8 @@
+
+package com.example.starstream.presentation.adapter
+
 package com.borabor.movieapp.presentation.adapter
+
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +10,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.starstream.R
+import com.example.starstream.databinding.ItemFullscreenImageBinding
+import com.example.starstream.domain.model.Image
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+
+class FullscreenImageAdapter(private val onClick: () -> Unit) : ListAdapter<Image, FullscreenImageAdapter.ViewHolder>(
+    DIFF_CALLBACK
+) {
+    inner class ViewHolder(val binding: ItemFullscreenImageBinding) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.findViewById<SubsamplingScaleImageView>(R.id.photoView).setOnClickListener { onClick() }
+
 import com.borabor.movieapp.R
 import com.borabor.movieapp.databinding.ItemFullscreenImageBinding
 import com.borabor.movieapp.domain.model.Image
@@ -18,6 +34,14 @@ class FullscreenImageAdapter(private val onClick: () -> Unit) : ListAdapter<Imag
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+
+        val inflater = LayoutInflater.from(parent.context)
+        val binding: ItemFullscreenImageBinding = DataBindingUtil.inflate(inflater, R.layout.item_fullscreen_image, parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.binding.image = getItem(position)
         return ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_fullscreen_image, parent, false))
     }
 
@@ -36,4 +60,7 @@ class FullscreenImageAdapter(private val onClick: () -> Unit) : ListAdapter<Imag
             }
         }
     }
+
 }
+}
+

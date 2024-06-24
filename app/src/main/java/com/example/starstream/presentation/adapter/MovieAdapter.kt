@@ -13,6 +13,13 @@ class MovieAdapter(
     private val isGrid: Boolean = false,
     private val isCredits: Boolean = false,
     private val isTrending: Boolean = false,
+
+    private val onTrendingFabClick: ((Int) -> Unit)? = null,
+    private val onLoadMore: (() -> Unit)? = null
+) : ListAdapter<Movie, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
+    inner class HorizontalViewHolder private constructor(val view: ItemMovieBinding) : RecyclerView.ViewHolder(view.root) {
+        constructor(parent: ViewGroup) : this(ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
     private val onTrendingFabClick: ((Int) -> Unit)? = null
 ) : ListAdapter<Movie, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
     inner class HorizontalViewHolder private constructor(val view: ItemMovieBinding) : RecyclerView.ViewHolder(view.root) {
