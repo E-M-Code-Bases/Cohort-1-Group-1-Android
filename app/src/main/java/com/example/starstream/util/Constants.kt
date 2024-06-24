@@ -5,14 +5,7 @@ object Constants {
     const val LIST_ID_TOP_RATED = "top_rated"
     const val LIST_ID_NOW_PLAYING = "now_playing"
     const val LIST_ID_UPCOMING = "upcoming"
-
-
     const val LIST_ID_TRENDING = "trending"
-
-    const val LIST_ID_AIRING_DAY = "airing_today"
-    const val LIST_ID_AIRING_WEEK = "on_the_air"
-
-
     const val INTENT_TYPE = "intent_type"
     const val MEDIA_TYPE = "media_type"
     const val TITLE = "title"
@@ -23,9 +16,6 @@ object Constants {
     const val REGION = "region"
 
     const val BACKGROUND_COLOR = "background_color"
-
-    const val SEASON_NUMBER = "season_number"
-
 
     const val IMAGE_LIST = "image_list"
     const val ITEM_POSITION = "item_position"

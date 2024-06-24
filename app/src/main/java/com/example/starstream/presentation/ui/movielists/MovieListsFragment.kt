@@ -2,7 +2,6 @@ package com.example.starstream.presentation.ui.movielists
 
 import android.os.Bundle
 import android.view.View
-<<<<<<< HEAD
 import androidx.navigation.fragment.findNavController
 import com.example.starstream.R
 import com.example.starstream.databinding.FragmentMovieListsBinding
@@ -10,15 +9,6 @@ import com.example.starstream.domain.model.Movie
 import com.example.starstream.presentation.adapter.MovieAdapter
 import com.example.starstream.presentation.ui.base.BaseFragment
 import com.example.starstream.util.*
-=======
-import com.example.starstream.R
-import com.example.starstream.databinding.FragmentMovieListsBinding
-import com.example.starstream.presentation.adapter.MovieAdapter
-import com.example.starstream.presentation.ui.base.BaseFragment
-import com.example.starstream.util.LifecycleRecyclerView
-import com.example.starstream.util.LifecycleViewPager
-import com.example.starstream.util.playYouTubeVideo
->>>>>>> 6c80a414ba0a035a66670691e5ffd892b92364bc
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.fragment_movie_lists) {
@@ -32,19 +22,11 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
             binding.viewModel = viewModel
         }
 
-<<<<<<< HEAD
     val adapterTrending = MovieAdapter(isTrending = true, onTrendingFabClick = { playTrailer(it) })
     val adapterPopular = MovieAdapter(onLoadMore = { viewModel.onLoadMore(Constants.LIST_ID_POPULAR) })
     val adapterTopRated = MovieAdapter(onLoadMore = { viewModel.onLoadMore(Constants.LIST_ID_TOP_RATED) })
     val adapterNowPlaying = MovieAdapter(onLoadMore = { viewModel.onLoadMore(Constants.LIST_ID_NOW_PLAYING) })
     val adapterUpcoming = MovieAdapter(onLoadMore = { viewModel.onLoadMore(Constants.LIST_ID_UPCOMING) })
-=======
-    val adapterTrending = MovieAdapter(isTrending = true) { playTrailer(it) }
-    val adapterPopular = MovieAdapter()
-    val adapterTopRated = MovieAdapter()
-    val adapterNowPlaying = MovieAdapter()
-    val adapterUpcoming = MovieAdapter()
->>>>>>> 6c80a414ba0a035a66670691e5ffd892b92364bc
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,7 +39,6 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
             addObserver(LifecycleRecyclerView(binding.rvUpcoming))
         }
 
-<<<<<<< HEAD
         binding.vpTrendings.setOnClickListener {
             navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_TRENDING, getString(R.string.title_trending))
         }
@@ -74,9 +55,6 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
             navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_UPCOMING, getString(R.string.title_upcoming_movies))
         }
 
-=======
-//        setupSpinner()
->>>>>>> 6c80a414ba0a035a66670691e5ffd892b92364bc
         collectFlows(listOf(::collectTrendingMovies, ::collectPopularMovies, ::collectTopRatedMovies, ::collectNowPlayingMovies, ::collectUpcomingMovies, ::collectUiState))
     }
 
@@ -89,7 +67,6 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
         ) else activity?.playYouTubeVideo(videoKey)
     }
 
-<<<<<<< HEAD
     private fun navigateToMovieDetails(movieId: Int) {
         val action = MovieListsFragmentDirections.actionMovieListsFragmentToMovieDetailsFragment(movieId)
         findNavController().navigate(action)
@@ -107,8 +84,6 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
         )
         findNavController().navigate(action)
     }
-=======
->>>>>>> 6c80a414ba0a035a66670691e5ffd892b92364bc
 
     private suspend fun collectTrendingMovies() {
         viewModel.trendingMovies.collect { trendingMovies ->
@@ -153,8 +128,4 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
             }
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 6c80a414ba0a035a66670691e5ffd892b92364bc
