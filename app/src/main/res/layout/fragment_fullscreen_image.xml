@@ -7,6 +7,7 @@
 
         <variable
             name="activity"
+
             type="com.example.starstream.presentation.ui.fullscreenimage.FullscreenImageFragment" />
 
     </data>

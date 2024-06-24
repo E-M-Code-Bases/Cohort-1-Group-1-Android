@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class FavoriteMovieEntity(
+
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
@@ -23,4 +24,5 @@ data class FavoriteMovieEntity(
     val voteCount: Int,
     @ColumnInfo(name = "date_added")
     val date: Long
+
 )
