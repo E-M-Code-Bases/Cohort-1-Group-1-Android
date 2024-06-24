@@ -362,3 +362,4 @@ fun SubsamplingScaleImageView.setImageUrl(imageUrl: String?) {
         setImage(ImageSource.uri(uri))
     }
 }
+

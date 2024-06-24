@@ -27,7 +27,11 @@ class FullscreenImageFragment : BaseFragment<FragmentFullscreenImageBinding>(R.l
         get() = { binding ->
             binding.lifecycleOwner = viewLifecycleOwner
             _binding = binding
+<<<<<<< HEAD
             binding.activity = this
+=======
+            binding.activity = this // Set the fragment instance to the 'activity' variable in the layout
+>>>>>>> 6c80a414ba0a035a66670691e5ffd892b92364bc
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
