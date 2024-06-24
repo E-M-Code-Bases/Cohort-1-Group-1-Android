@@ -119,18 +119,6 @@
                         style="@style/TitleDayNight"
                         android:text="@string/title_in_theatres" />
 
-                    <androidx.cardview.widget.CardView
-                        style="@style/SpinnerParent"
-                        android:layout_width="170dp"
-                        app:layout_constraintStart_toEndOf="@+id/textView">
-
-                        <Spinner
-                            android:id="@+id/spNowPlaying"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:spinnerMode="dialog" />
-
-                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:id="@+id/textView2"

@@ -1,4 +1,5 @@
 package com.example.starstream.util
+
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
@@ -11,11 +12,10 @@ enum class ImageQuality(val imageBaseUrl: String) {
 
 @Parcelize
 enum class IntentType : Parcelable {
-    LIST, VIDEOS, CAST, IMAGES, PERSON_CREDITS, SEARCH, GENRE
+    LIST, VIDEOS, CAST, SEARCH, GENRE
 }
 
 @Parcelize
 enum class MediaType : Parcelable {
     MOVIE, PERSON
 }
-

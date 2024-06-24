@@ -9,6 +9,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.example.starstream.R
 import com.example.starstream.databinding.ActivityMainBinding
+import com.example.starstream.presentation.ui.seeall.SeeAllFragmentDirections
 import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
@@ -23,6 +24,13 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.bottomNavBar.setupWithNavController(navController)
+    }
+
+    fun navigateToMovieDetails(id: Int) {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        val navController = navHostFragment.navController
+        val action = SeeAllFragmentDirections.actionSeeAllFragmentToMovieDetailsFragment(id)
+        navController.navigate(action)
     }
 
 }
