@@ -16,7 +16,7 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(R.layout.
 
     override val defineBindingVariables: (FragmentMovieDetailsBinding) -> Unit
         get() = { binding ->
-            binding.activity = this
+            binding.fragment = this
             binding.lifecycleOwner = this
             binding.viewModel = viewModel
         }

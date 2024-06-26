@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="activity"
+            name="fragment"
 
             type="com.example.starstream.presentation.ui.fullscreenimage.FullscreenImageFragment" />
 
@@ -26,22 +26,22 @@
             android:layout_gravity="center" />
 
         <ImageView
-            isVisible="@{!activity.fullscreen}"
+            isVisible="@{!fragment.fullscreen}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
-            android:onClick="@{() -> activity.finish()}"
+            android:onClick="@{() -> fragment.finish()}"
             android:padding="@dimen/padding_close_button"
             android:src="@drawable/ic_baseline_close_24"
             app:tint="@color/white" />
 
         <TextView
-            isVisible="@{!activity.fullscreen}"
+            isVisible="@{!fragment.fullscreen}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|center"
             android:layout_marginBottom="16dp"
-            android:text="@{activity.imageNumber}"
+            android:text="@{fragment.imageNumber}"
             android:textColor="@color/white"
             tools:text="1/10" />
 
