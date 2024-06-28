@@ -288,7 +288,6 @@ fun Toolbar.setupToolbar(fragment: Fragment?, backArrowTint: Int?, seeAllTitle: 
 }
 
 
-
 @BindingAdapter("collapsingToolbar", "frameLayout", "toolbarTitle", "backgroundColor", requireAll = false)
 fun AppBarLayout.setToolbarCollapseListener(collapsingToolbar: CollapsingToolbarLayout, frameLayout: FrameLayout, toolbarTitle: String, backgroundColor: Int) {
     var isShow = true
