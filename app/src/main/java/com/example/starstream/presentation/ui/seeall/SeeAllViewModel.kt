@@ -101,4 +101,5 @@ class SeeAllViewModel(
             else -> _uiState.value = UiState.successState()
         }
     }
+
 }
