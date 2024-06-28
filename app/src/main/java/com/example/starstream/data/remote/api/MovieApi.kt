@@ -8,6 +8,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
+
     @GET("movie/{list_id}")
     suspend fun getMovieList(@Path("list_id") listId: String, @Query("page") page: Int, @Query("region") region: String?): MovieListDTO
 
@@ -20,6 +21,8 @@ interface MovieApi {
     @GET("search/movie")
     suspend fun getMovieSearchResults(@Query("query") query: String, @Query("page") page: Int): MovieListDTO
 
-    @GET("movie/{movie_id}?&append_to_response=credits,videos,images,recommendations,external_ids")
+    @GET("movie/{movie_id}?&append_to_response=credits,videos,images")
     suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetailDTO
+
+
 }
