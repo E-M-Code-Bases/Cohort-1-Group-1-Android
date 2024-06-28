@@ -121,20 +121,6 @@ class MovieListsViewModel(
         }
     }
 
-//    fun getNowPlayingMoviesInSelectedRegion(countryName: String, countryCode: String) {
-//        _uiState.value = UiState.loadingState(isInitial)
-//        _nowPlayingMovies.value = emptyList()
-//        _countryName.value = countryName
-//        _countryCode.value = countryCode
-//
-//        pageNowPlaying = 1
-//
-//        viewModelScope.launch {
-//            coroutineScope { fetchList(Constants.LIST_ID_NOW_PLAYING) }
-//            setUiState()
-//        }
-//    }
-
     fun initRequests() {
         viewModelScope.launch {
             coroutineScope {
