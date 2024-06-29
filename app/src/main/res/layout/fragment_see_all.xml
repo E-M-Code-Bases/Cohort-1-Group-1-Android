@@ -8,7 +8,7 @@
         <import type="com.example.starstream.util.IntentType" />
 
         <variable
-            name="activity"
+            name="fragment"
             type="com.example.starstream.presentation.ui.seeall.SeeAllFragment" />
 
         <variable
@@ -21,7 +21,7 @@
         android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@{activity.backgroundColor}"
+        android:background="@{fragment.backgroundColor}"
         tools:context=".presentation.ui.seeall.SeeAllFragment">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -32,12 +32,12 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
 
-                backArrowTint="@{activity.backgroundColor}"
-                seeAllTitle="@{activity.title}"
-                titleTextColor="@{activity.backgroundColor}"
+                backArrowTint="@{fragment.backgroundColor}"
+                seeAllTitle="@{fragment.title}"
+                titleTextColor="@{fragment.backgroundColor}"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@{activity.backgroundColor}"
+                android:background="@{fragment.backgroundColor}"
                 app:layout_scrollFlags="scroll|enterAlways" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -49,10 +49,10 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                hasFixedSize="@{activity.intentType == IntentType.LIST || activity.intentType == IntentType.SEARCH || activity.intentType == IntentType.GENRE}"
+                hasFixedSize="@{fragment.intentType == IntentType.LIST || fragment.intentType == IntentType.SEARCH || fragment.intentType == IntentType.GENRE}"
                 isGrid="@{true}"
                 loadMore="@{viewModel::onLoadMore}"
-                shouldLoadMore="@{activity.intentType == IntentType.LIST || activity.intentType == IntentType.SEARCH || activity.intentType == IntentType.GENRE}"
+                shouldLoadMore="@{fragment.intentType == IntentType.LIST || fragment.intentType == IntentType.SEARCH || fragment.intentType == IntentType.GENRE}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"

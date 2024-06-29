@@ -16,7 +16,7 @@
         <import type="com.example.starstream.util.MediaType" />
 
         <variable
-            name="activity"
+            name="fragment"
             type="com.example.starstream.presentation.ui.moviedetails.MovieDetailsFragment" />
 
         <variable
@@ -28,7 +28,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@{activity.backgroundColor}"
+        android:background="@{fragment.backgroundColor}"
         android:orientation="vertical"
         tools:context=".presentation.ui.moviedetails.MovieDetailsFragment">
 
@@ -41,20 +41,20 @@
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/appBarLayout"
-                backgroundColor="@{activity.backgroundColor}"
+                backgroundColor="@{fragment.backgroundColor}"
                 collapsingToolbar="@{collapsingToolbarLayout}"
                 frameLayout="@{frameLayout}"
                 toolbarTitle="@{viewModel.details.title}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@{activity.backgroundColor}"
+                android:background="@{fragment.backgroundColor}"
                 android:fitsSystemWindows="true">
 
                 <com.google.android.material.appbar.CollapsingToolbarLayout
                     android:id="@+id/collapsingToolbarLayout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_poster_height"
-                    app:contentScrim="@{activity.backgroundColor}"
+                    app:contentScrim="@{fragment.backgroundColor}"
                     app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
                     app:titleCollapseMode="scale"
                     app:toolbarId="@id/toolbar">
@@ -77,7 +77,7 @@
 
                         <LinearLayout
                             style="@style/BriefDetailParent"
-                            transparentBackground="@{activity.backgroundColor}">
+                            transparentBackground="@{fragment.backgroundColor}">
 
                             <TextView
                                 style="@style/BriefDetailTitle"
@@ -125,7 +125,7 @@
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
 
-                        backArrowTint="@{activity.backgroundColor}"
+                        backArrowTint="@{fragment.backgroundColor}"
                         android:layout_width="match_parent"
                         android:layout_height="?attr/actionBarSize"
                         app:layout_collapseMode="pin" />
@@ -138,7 +138,7 @@
                 android:id="@+id/nestedScrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@{activity.backgroundColor}"
+                android:background="@{fragment.backgroundColor}"
                 app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
                 <LinearLayout
@@ -149,7 +149,7 @@
 
                     <com.google.android.material.chip.ChipGroup
                         style="@style/DetailsTitle"
-                        chipTint="@{activity.backgroundColor}"
+                        chipTint="@{fragment.backgroundColor}"
                         genreMediaType="@{MediaType.MOVIE}"
                         genres="@{viewModel.details.genres}"
                         isVisible="@{!viewModel.details.genres.empty}"
@@ -184,7 +184,7 @@
 
                         <TextView
                             style="@style/SeeAll"
-                            backgroundColor="@{activity.backgroundColor}"
+                            backgroundColor="@{fragment.backgroundColor}"
                             intentType="@{IntentType.VIDEOS}"
                             isVisible="@{viewModel.details.videos.filterVideos(false).size() > 2}"
                             list="@{viewModel.details.videos.filterVideos(false)}"
@@ -201,7 +201,7 @@
                         android:id="@+id/rvVideos"
                         style="@style/RecyclerView"
                         android:visibility="@{!viewModel.details.videos.filterVideos(false).isEmpty() ? View.VISIBLE : View.GONE}"
-                        android:adapter="@{activity.adapterVideos}" />
+                        android:adapter="@{fragment.adapterVideos}" />
 
 
                 </LinearLayout>
@@ -227,8 +227,8 @@
 
             <ImageButton
                 style="@style/BackButton"
-                iconTint="@{activity.backgroundColor}"
-                android:onClick="@{()->activity.onBackPressed()}" />
+                iconTint="@{fragment.backgroundColor}"
+                android:onClick="@{()->fragment.onBackPressed()}" />
 
         </FrameLayout>
 
