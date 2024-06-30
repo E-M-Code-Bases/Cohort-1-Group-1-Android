@@ -26,7 +26,7 @@ class SeeAllFragment : BaseFragment<FragmentSeeAllBinding>(R.layout.fragment_see
 
     override val defineBindingVariables: (FragmentSeeAllBinding) -> Unit
         get() = { binding ->
-            binding.activity = this
+            binding.fragment = this
             binding.lifecycleOwner = this
             binding.viewModel = viewModel
             binding.recyclerView.layoutManager = GridLayoutManager(

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movie App</string>
+    <string name="app_name">Star Stream</string>
 
     <string name="title_bottom_nav_bar_1">Home</string>
     <string name="title_bottom_nav_bar_2">Search</string>
