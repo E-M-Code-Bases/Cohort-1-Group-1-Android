@@ -4,13 +4,16 @@ package com.example.starstream.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class MovieListDTO(
+
     @SerializedName("results")
     val results: List<MovieDTO>,
     @SerializedName("total_results")
     val totalResults: Int
+
 )
 
 data class MovieDTO(
+
     @SerializedName("character")
     val character: String?,
     @SerializedName("id")
@@ -27,4 +30,5 @@ data class MovieDTO(
     val title: String,
     @SerializedName("vote_average")
     val voteAverage: Double
+
 )

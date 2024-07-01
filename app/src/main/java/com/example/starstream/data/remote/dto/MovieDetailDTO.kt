@@ -33,4 +33,5 @@ data class MovieDetailDTO(
     val voteAverage: Double,
     @SerializedName("vote_count")
     val voteCount: Int
+
 )
