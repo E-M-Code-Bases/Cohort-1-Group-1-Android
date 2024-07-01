@@ -3,11 +3,14 @@ package com.example.starstream.data.remote.dto
 import com.google.gson.annotations.SerializedName
 
 data class VideoListDTO(
+
     @SerializedName("results")
     val results: List<VideoDTO>
+
 )
 
 data class VideoDTO(
+
     @SerializedName("key")
     val key: String,
     @SerializedName("name")
@@ -18,4 +21,5 @@ data class VideoDTO(
     val site: String,
     @SerializedName("type")
     val type: String
+
 )
