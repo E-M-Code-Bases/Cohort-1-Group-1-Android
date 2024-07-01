@@ -24,5 +24,4 @@ interface MovieApi {
     @GET("movie/{movie_id}?&append_to_response=credits,videos,images")
     suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetailDTO
 
-
 }
