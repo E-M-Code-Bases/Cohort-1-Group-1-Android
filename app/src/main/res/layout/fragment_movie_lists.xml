@@ -127,9 +127,8 @@
                         intentType="@{IntentType.LIST}"
                         android:visibility="@{viewModel.nowPlayingMovies.size > 3 ? View.VISIBLE : View.GONE}"
                         mediaType="@{MediaType.MOVIE}"
-                        region="@{viewModel.countyCode}"
                         stringId="@{Constants.LIST_ID_NOW_PLAYING}"
-                        title="@{@string/title_in_theatres + @string/item_count_s(viewModel.countryName)}" />
+                        title="@{@string/title_in_theatres}" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
