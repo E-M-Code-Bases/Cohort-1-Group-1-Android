@@ -26,6 +26,7 @@ import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -156,20 +157,20 @@ fun View.setTransparentBackground(backgroundColor: Int) {
     setBackgroundColor(ColorUtils.setAlphaComponent(backgroundColor, 220))
 }
 
-//@BindingAdapter("isNested")
-//fun ViewPager2.handleNestedScroll(isNested: Boolean) {
-//    if (isNested) {
-//        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
-//        recyclerViewField.isAccessible = true
-//        val recyclerView = recyclerViewField.get(this) as RecyclerView
-//        recyclerView.interceptTouch()
-//    }
-//}
+@BindingAdapter("isNested")
+fun ViewPager2.handleNestedScroll(isNested: Boolean) {
+    if (isNested) {
+        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
+        recyclerViewField.isAccessible = true
+        val recyclerView = recyclerViewField.get(this) as RecyclerView
+        recyclerView.interceptTouch()
+    }
+}
 
-//@BindingAdapter("isNested")
-//fun RecyclerView.handleNestedScroll(isNested: Boolean) {
-//    if (isNested) interceptTouch()
-//}
+@BindingAdapter("isNested")
+fun RecyclerView.handleNestedScroll(isNested: Boolean) {
+    if (isNested) interceptTouch()
+}
 
 @BindingAdapter("type", "isGrid", "loadMore", "shouldLoadMore", requireAll = false)
 fun RecyclerView.addInfiniteScrollListener(type: Any?, isGrid: Boolean, infiniteScroll: InfiniteScrollListener, shouldLoadMore: Boolean) {
@@ -287,7 +288,6 @@ fun Toolbar.setupToolbar(fragment: Fragment?, backArrowTint: Int?, seeAllTitle: 
     }
 }
 
-
 @BindingAdapter("collapsingToolbar", "frameLayout", "toolbarTitle", "backgroundColor", requireAll = false)
 fun AppBarLayout.setToolbarCollapseListener(collapsingToolbar: CollapsingToolbarLayout, frameLayout: FrameLayout, toolbarTitle: String, backgroundColor: Int) {
     var isShow = true
@@ -358,4 +358,3 @@ fun SubsamplingScaleImageView.setImageUrl(imageUrl: String?) {
         setImage(ImageSource.uri(uri))
     }
 }
-
