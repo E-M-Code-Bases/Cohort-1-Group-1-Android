@@ -75,6 +75,7 @@
                         android:text="@string/title_popular_movies" />
 
                     <TextView
+                        android:id="@+id/seeAllPopular"
                         style="@style/SeeAll"
                         intentType="@{IntentType.LIST}"
                         mediaType="@{MediaType.MOVIE}"
@@ -97,6 +98,7 @@
                         android:text="@string/title_top_rated_movies" />
 
                     <TextView
+                        android:id="@+id/seeAllTopRated"
                         style="@style/SeeAll"
                         intentType="@{IntentType.LIST}"
                         mediaType="@{MediaType.MOVIE}"
@@ -119,9 +121,8 @@
                         style="@style/TitleDayNight"
                         android:text="@string/title_in_theatres" />
 
-
                     <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/seeAllNowPlaying"
                         style="@style/SeeAll"
                         intentType="@{IntentType.LIST}"
                         android:visibility="@{viewModel.nowPlayingMovies.size > 3 ? View.VISIBLE : View.GONE}"
@@ -146,6 +147,7 @@
                         android:text="@string/title_upcoming_movies" />
 
                     <TextView
+                        android:id="@+id/seeAllUpcoming"
                         style="@style/SeeAll"
                         intentType="@{IntentType.LIST}"
                         mediaType="@{MediaType.MOVIE}"
