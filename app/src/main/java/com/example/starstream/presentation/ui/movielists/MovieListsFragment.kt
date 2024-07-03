@@ -39,23 +39,38 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
             addObserver(LifecycleRecyclerView(binding.rvUpcoming))
         }
 
-        binding.vpTrendings.setOnClickListener {
-            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_TRENDING, getString(R.string.title_trending))
-        }
-        binding.rvPopular.setOnClickListener {
+//        binding.vpTrendings.setOnClickListener {
+//            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_TRENDING, getString(R.string.title_trending))
+//        }
+//        binding.rvPopular.setOnClickListener {
+//            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_POPULAR, getString(R.string.title_popular_movies))
+//        }
+//        binding.rvTopRated.setOnClickListener {
+//            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_TOP_RATED, getString(R.string.title_top_rated_movies))
+//        }
+//        binding.rvNowPlaying.setOnClickListener {
+//            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_NOW_PLAYING, getString(R.string.title_in_theatres))
+//        }
+//        binding.rvUpcoming.setOnClickListener {
+//            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_UPCOMING, getString(R.string.title_upcoming_movies))
+//        }
+
+        // Set click listeners for "See All" TextViews
+        binding.seeAllPopular.setOnClickListener {
             navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_POPULAR, getString(R.string.title_popular_movies))
         }
-        binding.rvTopRated.setOnClickListener {
+        binding.seeAllTopRated.setOnClickListener {
             navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_TOP_RATED, getString(R.string.title_top_rated_movies))
         }
-        binding.rvNowPlaying.setOnClickListener {
+        binding.seeAllNowPlaying.setOnClickListener {
             navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_NOW_PLAYING, getString(R.string.title_in_theatres))
         }
-        binding.rvUpcoming.setOnClickListener {
+        binding.seeAllUpcoming.setOnClickListener {
             navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_UPCOMING, getString(R.string.title_upcoming_movies))
         }
 
         collectFlows(listOf(::collectTrendingMovies, ::collectPopularMovies, ::collectTopRatedMovies, ::collectNowPlayingMovies, ::collectUpcomingMovies, ::collectUiState))
+
     }
 
     private fun playTrailer(movieId: Int) {
