@@ -33,12 +33,6 @@ class MovieListsViewModel(
     private val _nowPlayingMovies = MutableStateFlow(emptyList<Movie>())
     val nowPlayingMovies get() = _nowPlayingMovies.asStateFlow()
 
-    private val _countryName = MutableStateFlow("")
-    val countryName get() = _countryName.asStateFlow()
-
-    private val _countryCode = MutableStateFlow("")
-    val countyCode get() = _countryCode.asStateFlow()
-
     private val _upcomingMovies = MutableStateFlow(emptyList<Movie>())
     val upcomingMovies get() = _upcomingMovies.asStateFlow()
 
@@ -60,7 +54,6 @@ class MovieListsViewModel(
             mediaType = MediaType.MOVIE,
             listId = listId,
             page = page,
-            region = if (listId == Constants.LIST_ID_NOW_PLAYING) _countryCode.value else null
         ).collect { response ->
             when (response) {
                 is Resource.Success -> {
