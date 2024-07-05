@@ -39,7 +39,9 @@ import com.example.starstream.R
 import com.example.starstream.domain.model.Genre
 import com.example.starstream.domain.model.Movie
 import com.example.starstream.presentation.ui.home.HomeFragmentDirections
+import com.example.starstream.presentation.ui.movielists.MovieListsFragmentDirections
 import com.example.starstream.presentation.ui.seeall.SeeAllFragment
+import com.example.starstream.presentation.ui.seeall.SeeAllFragmentDirections
 import com.example.starstream.util.Constants
 import com.example.starstream.util.ImageQuality
 import com.example.starstream.util.InfiniteScrollListener
@@ -80,7 +82,9 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
             .priority(Priority.HIGH)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    Palette.from(resource).generate().dominantSwatch?.rgb?.let { backgroundColor = it }
+                    Palette.from(resource).generate().dominantSwatch?.rgb?.let { dominantColor ->
+                        backgroundColor = dominantColor
+                    }
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {}
@@ -88,14 +92,24 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
     }
 
     setOnClickListener {
-        // action with SafeArgs
+        val navController = findNavController()
         val action = when (mediaType) {
-            MediaType.MOVIE -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id, backgroundColor)
+            MediaType.MOVIE -> {
+                when (navController.currentDestination?.id) {
+                    R.id.seeAllFragment -> SeeAllFragmentDirections.actionSeeAllFragmentToMovieDetailsFragment(id, backgroundColor)
+                    R.id.homeFragment -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id, backgroundColor)
+                    R.id.movieListsFragment -> MovieListsFragmentDirections.actionMovieListsFragmentToMovieDetailsFragment(id, backgroundColor)
+                    else -> throw IllegalArgumentException("Unsupported media type")
+                }
+            }
             else -> throw IllegalArgumentException("Unsupported media type")
         }
 
-        // Navigate using SafeArgs
-        findNavController().navigate(action)
+        if (navController.currentDestination != null) {
+            navController.navigate(action)
+        } else {
+            Log.e("BindingAdapter", "NavController current destination is null")
+        }
     }
 }
 
