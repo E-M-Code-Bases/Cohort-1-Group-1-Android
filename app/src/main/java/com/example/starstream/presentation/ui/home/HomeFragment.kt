@@ -14,17 +14,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override val defineBindingVariables: ((FragmentHomeBinding) -> Unit)?
         get() = null
 
+    override var mediator: TabLayoutMediator? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewPager.adapter = FragmentAdapter(this)
         viewLifecycleOwner.lifecycle.addObserver(LifecycleViewPager(binding.viewPager))
 
+        val tabTitles = listOf(getString(R.string.tab_title_1)) // Add other titles if you have more tabs
         mediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
-            val tabTitles = listOf(getString(R.string.tab_title_1))
             tab.text = tabTitles[position]
         }
 
         mediator?.attach()
+    }
+
+    override fun onDestroyView() {
+        mediator?.detach()
+        super.onDestroyView()
     }
 }

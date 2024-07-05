@@ -1,4 +1,4 @@
-package com.example.starstream.util
+package com.example.starstream.presentation.bindingadapter
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -40,6 +40,14 @@ import com.example.starstream.domain.model.Genre
 import com.example.starstream.domain.model.Movie
 import com.example.starstream.presentation.ui.home.HomeFragmentDirections
 import com.example.starstream.presentation.ui.seeall.SeeAllFragment
+import com.example.starstream.util.Constants
+import com.example.starstream.util.ImageQuality
+import com.example.starstream.util.InfiniteScrollListener
+import com.example.starstream.util.IntentType
+import com.example.starstream.util.MediaType
+import com.example.starstream.util.interceptTouch
+import com.example.starstream.util.isDarkColor
+import com.example.starstream.util.setTintColor
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
@@ -82,7 +90,7 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
     setOnClickListener {
         // action with SafeArgs
         val action = when (mediaType) {
-            MediaType.MOVIE -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id)
+            MediaType.MOVIE -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id, backgroundColor)
             else -> throw IllegalArgumentException("Unsupported media type")
         }
 

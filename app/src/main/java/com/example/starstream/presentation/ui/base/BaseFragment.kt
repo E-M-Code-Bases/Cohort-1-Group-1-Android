@@ -28,7 +28,7 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes private val layoutId
 
     protected abstract val defineBindingVariables: ((B) -> Unit)?
 
-    protected var mediator: TabLayoutMediator? = null
+    protected open var mediator: TabLayoutMediator? = null
 
     private var snackbar: Snackbar? = null
 
