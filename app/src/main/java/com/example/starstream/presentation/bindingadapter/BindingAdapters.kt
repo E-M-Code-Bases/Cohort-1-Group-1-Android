@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Parcelable
 import android.util.Log
 import android.view.View
@@ -26,15 +25,12 @@ import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.davemorrissey.labs.subscaleview.ImageSource
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.example.starstream.R
 import com.example.starstream.domain.model.Genre
 import com.example.starstream.domain.model.Movie
@@ -47,7 +43,6 @@ import com.example.starstream.util.ImageQuality
 import com.example.starstream.util.InfiniteScrollListener
 import com.example.starstream.util.IntentType
 import com.example.starstream.util.MediaType
-import com.example.starstream.util.interceptTouch
 import com.example.starstream.util.isDarkColor
 import com.example.starstream.util.setTintColor
 import com.google.android.material.appbar.AppBarLayout
@@ -90,7 +85,6 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
                 override fun onLoadCleared(placeholder: Drawable?) {}
             })
     }
-
     setOnClickListener {
         val navController = findNavController()
         val action = when (mediaType) {
@@ -99,16 +93,21 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
                     R.id.seeAllFragment -> SeeAllFragmentDirections.actionSeeAllFragmentToMovieDetailsFragment(id, backgroundColor)
                     R.id.homeFragment -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id, backgroundColor)
                     R.id.movieListsFragment -> MovieListsFragmentDirections.actionMovieListsFragmentToMovieDetailsFragment(id, backgroundColor)
-                    else -> throw IllegalArgumentException("Unsupported media type")
+                    else -> {
+                        Log.e("BindingAdapter", "Unsupported destination id: ${navController.currentDestination?.id} for media type: $mediaType")
+                        null
+                    }
                 }
             }
-            else -> throw IllegalArgumentException("Unsupported media type")
+            else -> {
+                Log.e("BindingAdapter", "Unsupported media type: $mediaType")
+                null
+            }
         }
-
-        if (navController.currentDestination != null) {
+        if (action != null) {
             navController.navigate(action)
         } else {
-            Log.e("BindingAdapter", "NavController current destination is null")
+            Log.e("BindingAdapter", "Navigation action is null for media type: $mediaType with destination id: ${navController.currentDestination?.id}")
         }
     }
 }
@@ -177,21 +176,6 @@ fun View.setBackground(color: Int) {
 @BindingAdapter("transparentBackground")
 fun View.setTransparentBackground(backgroundColor: Int) {
     setBackgroundColor(ColorUtils.setAlphaComponent(backgroundColor, 220))
-}
-
-@BindingAdapter("isNested")
-fun ViewPager2.handleNestedScroll(isNested: Boolean) {
-    if (isNested) {
-        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
-        recyclerViewField.isAccessible = true
-        val recyclerView = recyclerViewField.get(this) as RecyclerView
-        recyclerView.interceptTouch()
-    }
-}
-
-@BindingAdapter("isNested")
-fun RecyclerView.handleNestedScroll(isNested: Boolean) {
-    if (isNested) interceptTouch()
 }
 
 @BindingAdapter("type", "isGrid", "loadMore", "shouldLoadMore", requireAll = false)
@@ -348,35 +332,12 @@ fun ChipGroup.setGenreChips(mediaType: MediaType, genreList: List<Genre>?, backg
                             putExtra(Constants.MEDIA_TYPE, mediaType as Parcelable)
                             putExtra(Constants.DETAIL_ID, genre.id)
                             putExtra(Constants.TITLE, genre.name)
-
                             context.startActivity(this)
                         }
                     }
-                })
+                }
+            )
         }
     }
 }
 
-@BindingAdapter("imageQuality")
-fun SubsamplingScaleImageView.setImageQuality(imageQuality: ImageQuality?) {
-    imageQuality?.let {
-        when (it) {
-            ImageQuality.ORIGINAL -> {
-                setMaxTileSize(4096) //  setting for original quality
-            }
-            ImageQuality.HIGH -> {
-                setMaxTileSize(2048) //  setting for high quality
-            }
-            else -> throw IllegalArgumentException("Unsupported media type")
-            // Add more cases
-        }
-    }
-}
-
-@BindingAdapter("imageUrl")
-fun SubsamplingScaleImageView.setImageUrl(imageUrl: String?) {
-    imageUrl?.let {
-        val uri = Uri.parse(imageUrl)
-        setImage(ImageSource.uri(uri))
-    }
-}
