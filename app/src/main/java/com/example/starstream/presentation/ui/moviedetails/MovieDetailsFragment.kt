@@ -26,8 +26,12 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(R.layout.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val id = arguments?.getInt("id") ?: 0
+        val backgroundColor = arguments?.getInt("backgroundColor") ?: 0
+
         viewModel.initRequests(id)
         collectFlows(listOf(::collectUiState))
+
     }
 
     fun onBackPressed() {
@@ -35,7 +39,6 @@ class MovieDetailsFragment : BaseFragment<FragmentMovieDetailsBinding>(R.layout.
             findNavController().navigateUp()
         }
     }
-
 
     private suspend fun collectUiState() {
         viewModel.uiState.collect { state ->
