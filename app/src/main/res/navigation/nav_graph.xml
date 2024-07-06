@@ -87,13 +87,13 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.starstream.presentation.ui.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/favoritesFragment"
-        android:name="com.example.starstream.presentation.ui.favorites.FavoritesFragment"
+        android:name="com.example.starstream.presentation.ui.favoritemovies.FavoritesFragment"
         android:label="FavoritesFragment" />
-    <fragment
-        android:id="@+id/fullscreenImageFragment"
-        android:name="com.example.starstream.presentation.ui.fullscreenimage.FullscreenImageFragment"
-        android:label="FullscreenImageFragment" />
 </navigation>

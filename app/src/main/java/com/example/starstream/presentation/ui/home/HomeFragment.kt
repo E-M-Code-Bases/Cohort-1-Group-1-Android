@@ -22,7 +22,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.viewPager.adapter = FragmentAdapter(this)
         viewLifecycleOwner.lifecycle.addObserver(LifecycleViewPager(binding.viewPager))
 
-        val tabTitles = listOf(getString(R.string.tab_title_1)) // Add other titles if you have more tabs
+        val tabTitles = listOf(getString(R.string.tab_title_1)) // Titles for more tabs
         mediator = TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabTitles[position]
         }
