@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.starstream.databinding.ItemMovieBinding
-import com.example.starstream.databinding.ItemNowplayingMovieBinding
+import com.example.starstream.databinding.ItemTrendingMovieBinding
 import com.example.starstream.domain.model.Movie
 
 class MovieAdapter(
@@ -14,15 +14,19 @@ class MovieAdapter(
     private val isCredits: Boolean = false,
     private val isTrending: Boolean = false,
     private val onTrendingFabClick: ((Int) -> Unit)? = null,
-    private val onLoadMore: (() -> Unit)? = null
+    private val onLoadMore: (() -> Unit)? = null,
+    private val onMovieClick: ((Movie) -> Unit)? = null
 ) : ListAdapter<Movie, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
     inner class HorizontalViewHolder private constructor(val view: ItemMovieBinding) : RecyclerView.ViewHolder(view.root) {
-        constructor(parent: ViewGroup) : this(ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-
+        constructor(parent: ViewGroup) : this(ItemMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)) {
+            view.root.setOnClickListener {
+                onMovieClick?.invoke(getItem(adapterPosition))
+            }
+        }
     }
 
-    inner class TrendingViewHolder private constructor(val view: ItemNowplayingMovieBinding) : RecyclerView.ViewHolder(view.root) {
-        constructor(parent: ViewGroup) : this(ItemNowplayingMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)) {
+    inner class TrendingViewHolder private constructor(val view: ItemTrendingMovieBinding) : RecyclerView.ViewHolder(view.root) {
+        constructor(parent: ViewGroup) : this(ItemTrendingMovieBinding.inflate(LayoutInflater.from(parent.context), parent, false)) {
             view.fabTrailer.setOnClickListener {
                 onTrendingFabClick?.invoke(getItem(adapterPosition).id)
             }

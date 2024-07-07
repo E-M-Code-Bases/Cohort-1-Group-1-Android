@@ -15,7 +15,6 @@ data class MovieDetail(
     val voteAverage: Double,
     val voteCount: Int
 ) {
-    fun trimGenreList(): String = genres.joinToString { it.name }
 
     companion object {
         val empty = MovieDetail(

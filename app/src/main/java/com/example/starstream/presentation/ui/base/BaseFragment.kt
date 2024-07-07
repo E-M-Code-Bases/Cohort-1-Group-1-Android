@@ -12,14 +12,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.starstream.R
-import com.example.starstream.presentation.ui.fullscreenimage.FullscreenImageFragment
 import com.example.starstream.presentation.ui.seeall.SeeAllFragment
 import com.example.starstream.util.Constants
 import com.example.starstream.util.isDarkColor
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
-import kotlin.reflect.KFunction0
 
 abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes private val layoutId: Int) : Fragment() {
 
@@ -28,7 +26,7 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes private val layoutId
 
     protected abstract val defineBindingVariables: ((B) -> Unit)?
 
-    protected var mediator: TabLayoutMediator? = null
+    protected open var mediator: TabLayoutMediator? = null
 
     private var snackbar: Snackbar? = null
 
@@ -49,7 +47,6 @@ abstract class BaseFragment<B : ViewDataBinding>(@LayoutRes private val layoutId
     protected open fun initBinding() {
         activity?.let { act ->
             when (this) {
-                is FullscreenImageFragment -> {}
                 is SeeAllFragment -> {
                     if (backgroundColor != 0) {
                         act.setTheme(if (backgroundColor.isDarkColor()) R.style.SeeAllDarkTheme else R.style.SeeAllLightTheme)
