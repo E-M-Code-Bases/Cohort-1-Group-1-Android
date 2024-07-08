@@ -18,28 +18,6 @@ internal fun Activity.playYouTubeVideo(videoKey: String) {
     startActivity(YouTubeStandalonePlayer.createVideoIntent(this, BuildConfig.YOUTUBE_API_KEY, videoKey, 0, true, false))
 }
 
-internal fun RecyclerView.interceptTouch() {
-    addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
-        override fun onInterceptTouchEvent(rv: RecyclerView, e: MotionEvent): Boolean {
-            return if (canScrollHorizontally(RecyclerView.FOCUS_FORWARD)) {
-                when (e.action) {
-                    MotionEvent.ACTION_MOVE -> rv.parent.requestDisallowInterceptTouchEvent(true)
-                }
-                false
-            } else {
-                when (e.action) {
-                    MotionEvent.ACTION_MOVE -> rv.parent.requestDisallowInterceptTouchEvent(false)
-                }
-                removeOnItemTouchListener(this)
-                true
-            }
-        }
-
-        override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {}
-        override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
-    })
-}
-
 internal fun Int.isDarkColor(): Boolean {
     val darkness = 1 - (0.299 * Color.red(this) + 0.587 * Color.green(this) + 0.114 * Color.blue(this)) / 255
     return darkness >= 0.5
@@ -72,8 +50,6 @@ internal fun Long.thousandsSeparator(context: Context): String {
 }
 
 internal fun Double.round(): Double = (this * 10.0).roundToInt() / 10.0
-
-internal fun Double.asPercent(): String = "%${(this * 10).toInt()}"
 
 internal fun String?.formatDate(): String {
     val outputFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)

@@ -9,34 +9,16 @@
         android:id="@+id/homeFragment"
         android:name="com.example.starstream.presentation.ui.home.HomeFragment"
         android:label="HomeFragment">
-    <action
-        android:id="@+id/action_homeFragment_to_movieDetailsFragment"
-        app:destination="@id/movieDetailsFragment" />
-    <action
-        android:id="@+id/action_homeFragment_to_movieListsFragment"
-        app:destination="@id/movieListsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_movieListsFragment"
+            app:destination="@id/movieListsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_movieListsFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.example.starstream.presentation.ui.search.SearchFragment"
-        android:label="SearchFragment" />
-    <fragment
-        android:id="@+id/favoritesFragment"
-        android:name="com.example.starstream.presentation.ui.favorites.FavoritesFragment"
-        android:label="FavoritesFragment" />
-    <fragment
-        android:id="@+id/fullscreenImageFragment"
-        android:name="com.example.starstream.presentation.ui.fullscreenimage.FullscreenImageFragment"
-        android:label="FullscreenImageFragment" >
-        <argument
-            android:name="imageList"
-            app:argType="integer[]" />
-        <argument
-            android:name="position"
-            app:argType="integer" />
-    </fragment>
-
     <fragment
         android:id="@+id/movieListsFragment"
         android:name="com.example.starstream.presentation.ui.movielists.MovieListsFragment"
@@ -56,35 +38,45 @@
         android:label="fragment_movie_details"
         tools:layout="@layout/fragment_movie_details">
         <argument
-            android:name="MOVIE_ID"
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="backgroundColor"
             app:argType="integer" />
     </fragment>
+
     <fragment
         android:id="@+id/seeAllFragment"
         android:name="com.example.starstream.presentation.ui.seeall.SeeAllFragment"
-        android:label="See All"
-        tools:layout="@layout/fragment_see_all">
+        android:label="SeeAllFragment">
         <argument
-            android:name="INTENT_TYPE"
-            app:argType="integer" />
+            android:name="media_type"
+            android:defaultValue="@null"
+            app:argType="com.example.starstream.util.MediaType"
+            app:nullable="true" />
         <argument
-            android:name="MEDIA_TYPE"
-            app:argType="integer" />
+            android:name="listId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <argument
-            android:name="LIST_ID"
+            android:name="title"
             app:argType="string" />
         <argument
-            android:name="REGION"
-            app:argType="string" />
+            android:name="region"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
         <argument
-            android:name="LIST"
-            app:argType="com.example.starstream.domain.model.Movie[]" />
+            android:name="videoList"
+            android:defaultValue="@null"
+            app:argType="com.example.starstream.domain.model.Video[]"
+            app:nullable="true" />
         <argument
-            android:name="IS_LANDSCAPE"
-            app:argType="boolean" />
-        <argument
-            android:name="TITLE"
-            app:argType="string" />
+            android:name="imageList"
+            android:defaultValue="@null"
+            app:argType="com.example.starstream.domain.model.Image[]"
+            app:nullable="true" />
 
         <action
             android:id="@+id/action_seeAllFragment_to_movieDetailsFragment"
@@ -92,5 +84,16 @@
 
     </fragment>
 
-
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.starstream.presentation.ui.search.SearchFragment"
+        android:label="SearchFragment">
+        <action
+            android:id="@+id/action_searchFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.starstream.presentation.ui.favoritemovies.FavoritesFragment"
+        android:label="FavoritesFragment" />
 </navigation>
