@@ -12,7 +12,7 @@ enum class ImageQuality(val imageBaseUrl: String) {
 
 @Parcelize
 enum class IntentType : Parcelable {
-    LIST, VIDEOS, CAST, SEARCH, GENRE
+    LIST, VIDEOS, CAST, SEARCH, GENRE, DETAILS
 }
 
 @Parcelize

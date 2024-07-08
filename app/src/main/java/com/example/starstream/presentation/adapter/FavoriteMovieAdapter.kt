@@ -10,22 +10,35 @@ import com.example.starstream.R
 import com.example.starstream.databinding.ItemFavoriteMovieBinding
 import com.example.starstream.domain.model.FavoriteMovie
 
-class FavoriteMovieAdapter(private val onItemClicked: (item: FavoriteMovie) -> Unit) : ListAdapter<FavoriteMovie, FavoriteMovieAdapter.ViewHolder>(
-    DIFF_CALLBACK
-) {
-    inner class ViewHolder(val view: ItemFavoriteMovieBinding) : RecyclerView.ViewHolder(view.root) {
+class FavoriteMovieAdapter(
+    private val onRemoveClicked: (item: FavoriteMovie) -> Unit,
+    private val onItemClicked: (item: FavoriteMovie) -> Unit
+) : ListAdapter<FavoriteMovie, FavoriteMovieAdapter.ViewHolder>(DIFF_CALLBACK) {
+
+    inner class ViewHolder(val binding: ItemFavoriteMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         init {
-            view.ivRemove.setOnClickListener { onItemClicked(getItem(adapterPosition)) }
+            binding.ivRemove.setOnClickListener { onRemoveClicked(getItem(adapterPosition)) }
+            binding.root.setOnClickListener { onItemClicked(getItem(adapterPosition)) }
+        }
+
+        fun bind(movie: FavoriteMovie) {
+            binding.movie = movie
+            binding.executePendingBindings()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_favorite_movie, parent, false))
+        val binding: ItemFavoriteMovieBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.item_favorite_movie,
+            parent,
+            false
+        )
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.movie = getItem(position)
-
+        holder.bind(getItem(position))
     }
 
     companion object {
