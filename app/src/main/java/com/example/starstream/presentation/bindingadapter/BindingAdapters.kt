@@ -34,6 +34,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.starstream.R
 import com.example.starstream.domain.model.Genre
 import com.example.starstream.domain.model.Movie
+import com.example.starstream.presentation.ui.favoritemovies.FavoriteMoviesFragmentDirections
 import com.example.starstream.presentation.ui.home.HomeFragmentDirections
 import com.example.starstream.presentation.ui.movielists.MovieListsFragmentDirections
 import com.example.starstream.presentation.ui.seeall.SeeAllFragment
@@ -93,6 +94,8 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
                     R.id.seeAllFragment -> SeeAllFragmentDirections.actionSeeAllFragmentToMovieDetailsFragment(id, backgroundColor)
                     R.id.homeFragment -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id, backgroundColor)
                     R.id.movieListsFragment -> MovieListsFragmentDirections.actionMovieListsFragmentToMovieDetailsFragment(id, backgroundColor)
+                    R.id.favoriteMoviesFragment -> FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(id,backgroundColor)
+
                     else -> {
                         Log.e("BindingAdapter", "Unsupported destination id: ${navController.currentDestination?.id} for media type: $mediaType")
                         null
@@ -130,6 +133,7 @@ fun View.setSeeAllIntent(
 
         val actionId = when (intentType) {
             IntentType.LIST -> R.id.action_movieListsFragment_to_seeAllFragment
+            IntentType.DETAILS -> R.id.action_favoriteMoviesFragment_to_movieDetailsFragment
             //add
             else -> throw IllegalArgumentException("Unsupported intent type")
         }

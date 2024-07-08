@@ -94,7 +94,7 @@
                                     style="@style/BriefDetailBody"
                                     android:maxLength="4"
                                     android:text="@{viewModel.details.releaseDate}"
-                                    tools:text="2022" />
+                                    tools:text="2024" />
 
                                 <TextView
                                     style="@style/BriefDetailBody"
@@ -176,11 +176,6 @@
                             android:id="@+id/videos"
                             style="@style/Title"
                             android:text="@string/detail_title_trailers" />
-
-                        <TextView
-                            style="@style/ListItemCount"
-                            android:text="@{@string/item_count(viewModel.details.videos.filterVideos(false).size())}"
-                            app:layout_constraintStart_toEndOf="@id/videos" />
 
                         <TextView
                             style="@style/SeeAll"
