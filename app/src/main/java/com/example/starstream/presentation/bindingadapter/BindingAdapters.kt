@@ -1,7 +1,6 @@
 package com.example.starstream.presentation.bindingadapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Parcelable
@@ -37,7 +36,7 @@ import com.example.starstream.domain.model.Movie
 import com.example.starstream.presentation.ui.favoritemovies.FavoriteMoviesFragmentDirections
 import com.example.starstream.presentation.ui.home.HomeFragmentDirections
 import com.example.starstream.presentation.ui.movielists.MovieListsFragmentDirections
-import com.example.starstream.presentation.ui.seeall.SeeAllFragment
+import com.example.starstream.presentation.ui.search.SearchFragmentDirections
 import com.example.starstream.presentation.ui.seeall.SeeAllFragmentDirections
 import com.example.starstream.util.Constants
 import com.example.starstream.util.ImageQuality
@@ -95,6 +94,7 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
                     R.id.homeFragment -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id, backgroundColor)
                     R.id.movieListsFragment -> MovieListsFragmentDirections.actionMovieListsFragmentToMovieDetailsFragment(id, backgroundColor)
                     R.id.favoriteMoviesFragment -> FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(id,backgroundColor)
+                    R.id.searchFragment -> SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(id, backgroundColor)
 
                     else -> {
                         Log.e("BindingAdapter", "Unsupported destination id: ${navController.currentDestination?.id} for media type: $mediaType")
@@ -134,6 +134,7 @@ fun View.setSeeAllIntent(
         val actionId = when (intentType) {
             IntentType.LIST -> R.id.action_movieListsFragment_to_seeAllFragment
             IntentType.DETAILS -> R.id.action_favoriteMoviesFragment_to_movieDetailsFragment
+            IntentType.SEARCH -> R.id.action_searchFragment_to_seeAllFragment
             //add
             else -> throw IllegalArgumentException("Unsupported intent type")
         }
@@ -331,13 +332,7 @@ fun ChipGroup.setGenreChips(mediaType: MediaType, genreList: List<Genre>?, backg
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     setTextColor(backgroundColor.setTintColor(true))
                     setOnClickListener {
-                        Intent(context, SeeAllFragment::class.java).apply {
-                            putExtra(Constants.INTENT_TYPE, IntentType.GENRE as Parcelable)
-                            putExtra(Constants.MEDIA_TYPE, mediaType as Parcelable)
-                            putExtra(Constants.DETAIL_ID, genre.id)
-                            putExtra(Constants.TITLE, genre.name)
-                            context.startActivity(this)
-                        }
+                        /*handle genre click */
                     }
                 }
             )

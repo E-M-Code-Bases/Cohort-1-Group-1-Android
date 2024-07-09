@@ -2,6 +2,7 @@ package com.example.starstream.presentation.ui.movielists
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.lifecycleScope
 import com.example.starstream.R
 import com.example.starstream.databinding.FragmentMovieListsBinding
 import com.example.starstream.presentation.adapter.MovieAdapter
@@ -10,6 +11,7 @@ import com.example.starstream.util.Constants
 import com.example.starstream.util.LifecycleRecyclerView
 import com.example.starstream.util.LifecycleViewPager
 import com.example.starstream.util.playYouTubeVideo
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -45,15 +47,17 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
     }
 
     private fun playTrailer(movieId: Int) {
-        val videoKey = viewModel.getTrendingMovieTrailer(movieId)
-        if (videoKey.isEmpty()) {
-            showSnackbar(
-                message = getString(R.string.trending_trailer_error),
-                indefinite = false,
-                anchor = true
-            )
-        } else {
-            activity?.playYouTubeVideo(videoKey)
+        lifecycleScope.launch {
+            val videoKey = viewModel.getTrendingMovieTrailer(movieId)
+            if (videoKey.isEmpty()) {
+                showSnackbar(
+                    message = getString(R.string.trending_trailer_error),
+                    indefinite = false,
+                    anchor = true
+                )
+            } else {
+                activity?.playYouTubeVideo(videoKey)
+            }
         }
     }
 
