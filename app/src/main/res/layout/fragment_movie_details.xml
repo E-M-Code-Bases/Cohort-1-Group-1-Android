@@ -178,13 +178,9 @@
                             android:text="@string/detail_title_trailers" />
 
                         <TextView
-                            style="@style/SeeAll"
-                            backgroundColor="@{fragment.backgroundColor}"
-                            intentType="@{IntentType.VIDEOS}"
-                            isVisible="@{viewModel.details.videos.filterVideos(false).size() > 2}"
-                            list="@{viewModel.details.videos.filterVideos(false)}"
-                            mediaType="@{MediaType.MOVIE}"
-                            title="@{@string/detail_title_trailers + @string/item_count(viewModel.details.videos.filterVideos(false).size())}" />
+                            style="@style/ListItemCount"
+                            android:text="@{@string/item_count(viewModel.details.videos.filterVideos(false).size())}"
+                            app:layout_constraintStart_toEndOf="@id/videos" />
 
                         <TextView
                             style="@style/ListItemCount"
@@ -195,9 +191,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rvVideos"
                         style="@style/RecyclerView"
-                        android:visibility="@{!viewModel.details.videos.filterVideos(false).isEmpty() ? View.VISIBLE : View.GONE}"
+                        isVisible="@{!viewModel.details.videos.filterVideos(false).empty}"
                         android:adapter="@{fragment.adapterVideos}" />
-
 
                 </LinearLayout>
 

@@ -19,6 +19,7 @@
             android:id="@+id/action_movieListsFragment_to_seeAllFragment"
             app:destination="@id/seeAllFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/movieListsFragment"
         android:name="com.example.starstream.presentation.ui.movielists.MovieListsFragment"
@@ -91,14 +92,18 @@
         <action
             android:id="@+id/action_searchFragment_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_seeAllFragment"
+            app:destination="@id/seeAllFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/favoritesFragment"
         android:name="com.example.starstream.presentation.ui.favoritemovies.FavoritesFragment"
         android:label="FavoritesFragment" >
-    <action
-        android:id="@+id/action_favoritesFragment_to_movieDetailsFragment"
-        app:destination="@id/movieDetailsFragment" />
+        <action
+            android:id="@+id/action_favoriteMoviesFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
 
     <fragment

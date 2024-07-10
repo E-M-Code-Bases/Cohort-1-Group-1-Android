@@ -56,7 +56,7 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding>(R.lay
 
     private fun navigateToMovieDetails(movie: FavoriteMovie) {
         val navController = findNavController()
-        val action = FavoritesFragmentDirections.actionFavoritesFragmentToMovieDetailsFragment(id, backgroundColor)
+        val action = FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(id, backgroundColor)
         navController.navigate(action)
     }
 
