@@ -20,7 +20,7 @@ val viewModelModule = module {
 
     viewModel { SeeAllViewModel(get(), get()) }
     viewModel { SearchViewModel() }
-    viewModel { MovieListsViewModel(get(), get()) }
+    viewModel { MovieListsViewModel(get(),get(), get()) }
 
     viewModel {
         MovieDetailsViewModel(
