@@ -41,6 +41,7 @@ fun isNetworkAvailable(context: Context): Boolean {
 
 val networkModule = module {
 
+    // Cache Interceptor
     single(named("cacheInterceptor")) {
         Interceptor { chain ->
             val headerName = "Cache-Control"
@@ -53,6 +54,7 @@ val networkModule = module {
         }
     }
 
+    // Request Interceptor
     single(named("requestInterceptor")) {
         Interceptor { chain ->
             val originalRequest = chain.request()
@@ -68,6 +70,7 @@ val networkModule = module {
         }
     }
 
+    // OkHttpClient
     single {
         OkHttpClient.Builder()
             .cache(Cache(get<Context>().cacheDir, CACHE_SIZE))
@@ -76,6 +79,7 @@ val networkModule = module {
             .build()
     }
 
+    // Retrofit
     single {
         Retrofit.Builder()
             .client(get())
@@ -84,6 +88,7 @@ val networkModule = module {
             .build()
     }
 
+    // MovieApi Service
     single { get<Retrofit>().create(MovieApi::class.java) }
 
 }

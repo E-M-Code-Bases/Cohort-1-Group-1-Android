@@ -2,20 +2,22 @@ package com.example.starstream.util
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
-import android.view.MotionEvent
-import androidx.recyclerview.widget.RecyclerView
-import com.example.starstream.BuildConfig
+import android.net.Uri
 import com.example.starstream.R
-import com.google.android.youtube.player.YouTubeStandalonePlayer
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 import kotlin.math.roundToInt
 
+
 internal fun Activity.playYouTubeVideo(videoKey: String) {
-    startActivity(YouTubeStandalonePlayer.createVideoIntent(this, BuildConfig.YOUTUBE_API_KEY, videoKey, 0, true, false))
+    val trailerUrl = "https://www.youtube.com/watch?v=$videoKey"
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(trailerUrl))
+    intent.putExtra("force_fullscreen", true)
+    startActivity(intent)
 }
 
 internal fun Int.isDarkColor(): Boolean {
