@@ -2,6 +2,7 @@ package com.example.starstream.presentation.ui.favoritemovies
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import com.example.starstream.R
 import com.example.starstream.databinding.FragmentFavoriteMoviesBinding
 import com.example.starstream.domain.model.FavoriteMovie
@@ -21,7 +22,14 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding>(R.lay
             binding.viewModel = viewModel
         }
 
-    val adapterFavorites = FavoriteMovieAdapter { removeMovie(it) }
+//    val adapterFavorites = FavoriteMovieAdapter { removeMovie(it) }
+
+     val adapterFavorites by lazy {
+        FavoriteMovieAdapter(
+            onRemoveClicked = { movie -> removeMovie(movie) },
+            onItemClicked = { movie -> navigateToMovieDetails(movie) }
+        )
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,6 +52,12 @@ class FavoriteMoviesFragment : BaseFragment<FragmentFavoriteMoviesBinding>(R.lay
         ) {
             viewModel.addMovieToFavorites(movie)
         }
+    }
+
+    private fun navigateToMovieDetails(movie: FavoriteMovie) {
+        val navController = findNavController()
+        val action = FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(id, backgroundColor)
+        navController.navigate(action)
     }
 
     private suspend fun collectFavoriteMovies() {

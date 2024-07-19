@@ -17,6 +17,8 @@ data class ImageListDTO(
 )
 
 data class ImageDTO(
+
     @SerializedName("file_path")
     val filePath: String
+
 )

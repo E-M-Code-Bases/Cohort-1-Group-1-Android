@@ -13,6 +13,10 @@ data class VideoList(
     companion object {
         val empty = VideoList(results = emptyList())
     }
+
+    fun toList(): List<Video> {
+        return results
+    }
 }
 
 @Parcelize

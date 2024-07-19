@@ -2,14 +2,18 @@ package com.example.starstream.presentation.ui.movielists
 
 import android.os.Bundle
 import android.view.View
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.lifecycleScope
 import com.example.starstream.R
 import com.example.starstream.databinding.FragmentMovieListsBinding
-import com.example.starstream.domain.model.Movie
 import com.example.starstream.presentation.adapter.MovieAdapter
 import com.example.starstream.presentation.ui.base.BaseFragment
-import com.example.starstream.util.*
+import com.example.starstream.util.Constants
+import com.example.starstream.util.LifecycleRecyclerView
+import com.example.starstream.util.LifecycleViewPager
+import com.example.starstream.util.playYouTubeVideo
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.fragment_movie_lists) {
 
@@ -39,50 +43,22 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
             addObserver(LifecycleRecyclerView(binding.rvUpcoming))
         }
 
-        binding.vpTrendings.setOnClickListener {
-            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_TRENDING, getString(R.string.title_trending))
-        }
-        binding.rvPopular.setOnClickListener {
-            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_POPULAR, getString(R.string.title_popular_movies))
-        }
-        binding.rvTopRated.setOnClickListener {
-            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_TOP_RATED, getString(R.string.title_top_rated_movies))
-        }
-        binding.rvNowPlaying.setOnClickListener {
-            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_NOW_PLAYING, getString(R.string.title_in_theatres))
-        }
-        binding.rvUpcoming.setOnClickListener {
-            navigateToSeeAll(IntentType.LIST, MediaType.MOVIE, Constants.LIST_ID_UPCOMING, getString(R.string.title_upcoming_movies))
-        }
-
         collectFlows(listOf(::collectTrendingMovies, ::collectPopularMovies, ::collectTopRatedMovies, ::collectNowPlayingMovies, ::collectUpcomingMovies, ::collectUiState))
     }
 
     private fun playTrailer(movieId: Int) {
-        val videoKey = viewModel.getTrendingMovieTrailer(movieId)
-        if (videoKey.isEmpty()) showSnackbar(
-            message = getString(R.string.trending_trailer_error),
-            indefinite = false,
-            anchor = true
-        ) else activity?.playYouTubeVideo(videoKey)
-    }
-
-    private fun navigateToMovieDetails(movieId: Int) {
-        val action = MovieListsFragmentDirections.actionMovieListsFragmentToMovieDetailsFragment(movieId)
-        findNavController().navigate(action)
-    }
-
-    private fun navigateToSeeAll(intentType: IntentType, mediaType: MediaType, listId: String, title: String, region: String? = null) {
-        val action = MovieListsFragmentDirections.actionMovieListsFragmentToSeeAllFragment(
-            INTENTTYPE = intentType.ordinal,
-            MEDIATYPE = mediaType.ordinal,
-            LISTID = listId,
-            REGION = region ?: "",
-            LIST = emptyArray<Movie>(), // Parcelable array
-            ISLANDSCAPE = false,
-            TITLE = title
-        )
-        findNavController().navigate(action)
+        lifecycleScope.launch {
+            val videoKey = viewModel.getTrendingMovieTrailer(movieId)
+            if (videoKey.isEmpty()) {
+                showSnackbar(
+                    message = getString(R.string.trending_trailer_error),
+                    indefinite = false,
+                    anchor = true
+                )
+            } else {
+                activity?.playYouTubeVideo(videoKey)
+            }
+        }
     }
 
     private suspend fun collectTrendingMovies() {
@@ -117,13 +93,15 @@ class MovieListsFragment : BaseFragment<FragmentMovieListsBinding>(R.layout.frag
 
     private suspend fun collectUiState() {
         viewModel.uiState.collect { state ->
-            if (state.isError) showSnackbar(
-                message = state.errorText!!,
-                actionText = getString(R.string.button_retry),
-                anchor = true
-            ) {
-                viewModel.retryConnection {
-                    viewModel.initRequests()
+            if (state.isError) {
+                showSnackbar(
+                    message = state.errorText!!,
+                    actionText = getString(R.string.button_retry),
+                    anchor = true
+                ) {
+                    viewModel.retryConnection {
+                        viewModel.initRequests()
+                    }
                 }
             }
         }

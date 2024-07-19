@@ -1,10 +1,8 @@
-package com.example.starstream.util
+package com.example.starstream.presentation.bindingadapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Parcelable
 import android.util.Log
 import android.view.View
@@ -32,13 +30,21 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.davemorrissey.labs.subscaleview.ImageSource
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import com.example.starstream.R
 import com.example.starstream.domain.model.Genre
 import com.example.starstream.domain.model.Movie
+import com.example.starstream.presentation.ui.favoritemovies.FavoriteMoviesFragmentDirections
 import com.example.starstream.presentation.ui.home.HomeFragmentDirections
-import com.example.starstream.presentation.ui.seeall.SeeAllFragment
+import com.example.starstream.presentation.ui.movielists.MovieListsFragmentDirections
+import com.example.starstream.presentation.ui.search.SearchFragmentDirections
+import com.example.starstream.presentation.ui.seeall.SeeAllFragmentDirections
+import com.example.starstream.util.Constants
+import com.example.starstream.util.ImageQuality
+import com.example.starstream.util.InfiniteScrollListener
+import com.example.starstream.util.IntentType
+import com.example.starstream.util.MediaType
+import com.example.starstream.util.isDarkColor
+import com.example.starstream.util.setTintColor
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.chip.Chip
@@ -71,22 +77,41 @@ fun View.setDetailsIntent(mediaType: MediaType, id: Int, imageUrl: String?, seas
             .priority(Priority.HIGH)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    Palette.from(resource).generate().dominantSwatch?.rgb?.let { backgroundColor = it }
+                    Palette.from(resource).generate().dominantSwatch?.rgb?.let { dominantColor ->
+                        backgroundColor = dominantColor
+                    }
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {}
             })
     }
-
     setOnClickListener {
-        // action with SafeArgs
+        val navController = findNavController()
         val action = when (mediaType) {
-            MediaType.MOVIE -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id)
-            else -> throw IllegalArgumentException("Unsupported media type")
-        }
+            MediaType.MOVIE -> {
+                when (navController.currentDestination?.id) {
+                    R.id.seeAllFragment -> SeeAllFragmentDirections.actionSeeAllFragmentToMovieDetailsFragment(id, backgroundColor)
+                    R.id.homeFragment -> HomeFragmentDirections.actionHomeFragmentToMovieDetailsFragment(id, backgroundColor)
+                    R.id.movieListsFragment -> MovieListsFragmentDirections.actionMovieListsFragmentToMovieDetailsFragment(id, backgroundColor)
+                    R.id.favoriteMoviesFragment -> FavoriteMoviesFragmentDirections.actionFavoriteMoviesFragmentToMovieDetailsFragment(id,backgroundColor)
+                    R.id.searchFragment -> SearchFragmentDirections.actionSearchFragmentToMovieDetailsFragment(id, backgroundColor)
 
-        // Navigate using SafeArgs
-        findNavController().navigate(action)
+                    else -> {
+                        Log.e("BindingAdapter", "Unsupported destination id: ${navController.currentDestination?.id} for media type: $mediaType")
+                        null
+                    }
+                }
+            }
+            else -> {
+                Log.e("BindingAdapter", "Unsupported media type: $mediaType")
+                null
+            }
+        }
+        if (action != null) {
+            navController.navigate(action)
+        } else {
+            Log.e("BindingAdapter", "Navigation action is null for media type: $mediaType with destination id: ${navController.currentDestination?.id}")
+        }
     }
 }
 
@@ -108,6 +133,8 @@ fun View.setSeeAllIntent(
 
         val actionId = when (intentType) {
             IntentType.LIST -> R.id.action_movieListsFragment_to_seeAllFragment
+            IntentType.DETAILS -> R.id.action_favoriteMoviesFragment_to_movieDetailsFragment
+            IntentType.SEARCH -> R.id.action_searchFragment_to_seeAllFragment
             //add
             else -> throw IllegalArgumentException("Unsupported intent type")
         }
@@ -155,21 +182,6 @@ fun View.setBackground(color: Int) {
 fun View.setTransparentBackground(backgroundColor: Int) {
     setBackgroundColor(ColorUtils.setAlphaComponent(backgroundColor, 220))
 }
-
-//@BindingAdapter("isNested")
-//fun ViewPager2.handleNestedScroll(isNested: Boolean) {
-//    if (isNested) {
-//        val recyclerViewField = ViewPager2::class.java.getDeclaredField("mRecyclerView")
-//        recyclerViewField.isAccessible = true
-//        val recyclerView = recyclerViewField.get(this) as RecyclerView
-//        recyclerView.interceptTouch()
-//    }
-//}
-
-//@BindingAdapter("isNested")
-//fun RecyclerView.handleNestedScroll(isNested: Boolean) {
-//    if (isNested) interceptTouch()
-//}
 
 @BindingAdapter("type", "isGrid", "loadMore", "shouldLoadMore", requireAll = false)
 fun RecyclerView.addInfiniteScrollListener(type: Any?, isGrid: Boolean, infiniteScroll: InfiniteScrollListener, shouldLoadMore: Boolean) {
@@ -287,7 +299,6 @@ fun Toolbar.setupToolbar(fragment: Fragment?, backArrowTint: Int?, seeAllTitle: 
     }
 }
 
-
 @BindingAdapter("collapsingToolbar", "frameLayout", "toolbarTitle", "backgroundColor", requireAll = false)
 fun AppBarLayout.setToolbarCollapseListener(collapsingToolbar: CollapsingToolbarLayout, frameLayout: FrameLayout, toolbarTitle: String, backgroundColor: Int) {
     var isShow = true
@@ -321,41 +332,11 @@ fun ChipGroup.setGenreChips(mediaType: MediaType, genreList: List<Genre>?, backg
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                     setTextColor(backgroundColor.setTintColor(true))
                     setOnClickListener {
-                        Intent(context, SeeAllFragment::class.java).apply {
-                            putExtra(Constants.INTENT_TYPE, IntentType.GENRE as Parcelable)
-                            putExtra(Constants.MEDIA_TYPE, mediaType as Parcelable)
-                            putExtra(Constants.DETAIL_ID, genre.id)
-                            putExtra(Constants.TITLE, genre.name)
-
-                            context.startActivity(this)
-                        }
+                        /*handle genre click */
                     }
-                })
+                }
+            )
         }
-    }
-}
-
-@BindingAdapter("imageQuality")
-fun SubsamplingScaleImageView.setImageQuality(imageQuality: ImageQuality?) {
-    imageQuality?.let {
-        when (it) {
-            ImageQuality.ORIGINAL -> {
-                setMaxTileSize(4096) //  setting for original quality
-            }
-            ImageQuality.HIGH -> {
-                setMaxTileSize(2048) //  setting for high quality
-            }
-            else -> throw IllegalArgumentException("Unsupported media type")
-            // Add more cases
-        }
-    }
-}
-
-@BindingAdapter("imageUrl")
-fun SubsamplingScaleImageView.setImageUrl(imageUrl: String?) {
-    imageUrl?.let {
-        val uri = Uri.parse(imageUrl)
-        setImage(ImageSource.uri(uri))
     }
 }
 

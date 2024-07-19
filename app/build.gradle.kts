@@ -31,7 +31,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField ("String", "TMDB_API_KEY", "\"f75837aaa377dd8e81dc57838ce10e45\"")
-        buildConfigField("String", "YOUTUBE_API_KEY", "\"${localProperties.getProperty("youtube_api_key")}\"")
+//        buildConfigField("String", "YOUTUBE_API_KEY", "\"${localProperties.getProperty("youtube_api_key")}\"")
 
     }
 
@@ -76,7 +76,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(files("libs\\YouTubeAndroidPlayerApi.jar"))
+//    implementation(files("libs\\YouTubeAndroidPlayerApi.jar"))
 
     // Testing dependencies
     testImplementation(libs.junit)

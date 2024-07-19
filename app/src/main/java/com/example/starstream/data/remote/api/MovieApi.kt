@@ -15,14 +15,19 @@ interface MovieApi {
     @GET("trending/movie/week")
     suspend fun getTrendingMovies(): MovieListDTO
 
+//    @GET("movie/{movie_id}/videos")
+//    suspend fun getTrendingMovieTrailers(@Path("movie_id") movieId: Int): VideoListDTO
+
     @GET("movie/{movie_id}/videos")
-    suspend fun getTrendingMovieTrailers(@Path("movie_id") movieId: Int): VideoListDTO
+    suspend fun getTrendingMovieTrailers(
+        @Path("movie_id") movieId: Int,
+        @Query("language") language: String? = "en-US",
+    ): VideoListDTO
 
     @GET("search/movie")
     suspend fun getMovieSearchResults(@Query("query") query: String, @Query("page") page: Int): MovieListDTO
 
     @GET("movie/{movie_id}?&append_to_response=credits,videos,images")
     suspend fun getMovieDetails(@Path("movie_id") movieId: Int): MovieDetailDTO
-
 
 }

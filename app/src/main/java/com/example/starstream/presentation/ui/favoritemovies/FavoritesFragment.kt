@@ -1,4 +1,4 @@
-package com.example.starstream.presentation.ui.favorites
+package com.example.starstream.presentation.ui.favoritemovies
 
 import android.os.Bundle
 import android.view.View

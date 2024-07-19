@@ -22,8 +22,8 @@ internal fun ImageDTO.toImage() = Image(filePath)
 
 internal fun MovieDTO.toMovie() = Movie(character, id, job, overview, posterPath, releaseDate, title, voteAverage)
 
-
 internal fun MovieDetailDTO.toMovieDetail() = MovieDetail(
+
     genres.map { it.toGenre() },
     homepage,
     id,
@@ -37,6 +37,7 @@ internal fun MovieDetailDTO.toMovieDetail() = MovieDetail(
     videos.toVideoList(),
     voteAverage,
     voteCount
+
 )
 
 internal fun MovieListDTO.toMovieList() = MovieList(results.map { it.toMovie() }, totalResults)
