@@ -1,8 +1,12 @@
 package com.example.starstream.presentation.ui.movielists
 
 import androidx.lifecycle.viewModelScope
+import com.example.starstream.data.remote.api.MovieApi
+import com.example.starstream.data.remote.dto.VideoListDTO
 import com.example.starstream.domain.model.Movie
 import com.example.starstream.domain.model.MovieList
+import com.example.starstream.domain.model.Video
+import com.example.starstream.domain.model.VideoList
 import com.example.starstream.domain.useCase.GetList
 import com.example.starstream.domain.useCase.GetTrendingVideos
 import com.example.starstream.presentation.ui.base.BaseViewModel
@@ -14,11 +18,11 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 class MovieListsViewModel(
     private val getList: GetList,
-    private val getTrendingVideos: GetTrendingVideos
+    private val getTrendingVideos: GetTrendingVideos,
+    private val movieApi: MovieApi
 ) : BaseViewModel() {
 
     private val _trendingMovies = MutableStateFlow(emptyList<Movie>())
@@ -92,26 +96,27 @@ class MovieListsViewModel(
         }
     }
 
-    fun getTrendingMovieTrailer(movieId: Int): String {
-        return runBlocking {
-            var videoKey = ""
-
-            coroutineScope {
-                getTrendingVideos(MediaType.MOVIE, movieId).collect { response ->
-                    when (response) {
-                        is Resource.Success -> {
-                            videoKey = response.data.filterVideos(true).last().key
-                            _uiState.value = UiState.successState()
-                        }
-                        is Resource.Error -> {
-                            _uiState.value = UiState.errorState(false, response.message)
-                        }
-                    }
-                }
-            }
-
-            videoKey
+    suspend fun getTrendingMovieTrailer(movieId: Int): String {
+        return try {
+            val videoList = movieApi.getTrendingMovieTrailers(movieId).toDomainModel()
+            val trailer = videoList.filterVideos(onlyTrailers = true).firstOrNull()
+            trailer?.key ?: ""
+        } catch (e: Exception) {
+            // Handle exceptions
+            ""
         }
+    }
+    // Convert DTO to domain model
+    private fun VideoListDTO.toDomainModel(): VideoList {
+        return VideoList(results = this.results.map {
+            Video(
+                key = it.key,
+                name = it.name,
+                publishedAt = it.publishedAt,
+                site = it.site,
+                type = it.type
+            )
+        })
     }
 
     fun initRequests() {

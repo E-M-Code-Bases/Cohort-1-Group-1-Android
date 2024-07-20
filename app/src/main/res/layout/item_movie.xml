@@ -79,7 +79,6 @@
                 android:text="@{isCredits ? (movie.character == null ? movie.job : movie.character) : movie.releaseDate}"
                 tools:text="2022" />
 
-
             <TextView
                 coloredRating="@{ExtensionsKt.round(movie.voteAverage)}"
                 isVisible="@{!isCredits}"
